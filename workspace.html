@@ -360,70 +360,57 @@
         </div>
     </div>
 
+    <!-- 纯前端JavaScript模块 -->
+    <script src="js/notification.js"></script>
+    <script src="js/video-processor.js"></script>
+    
     <script>
         let uploadedFile = null;
         let isProcessing = false;
         let selectedCapability = 'eraser';
 
-        // 能力配置数据
-        const capabilityConfigs = {
-            eraser: {
-                name: '智能擦除',
-                description: '使用AI技术自动识别和去除视频中的字幕、水印、Logo等元素，保持视频内容的完整性。',
-                price: '¥2/分钟',
-                pricePerMinute: 2
-            },
-            trim: {
-                name: '视频剪辑',
-                description: '精确裁剪视频片段，支持按时间点分割、多段合并，快速制作精彩集锦。',
-                price: '¥1.5/分钟',
-                pricePerMinute: 1.5
-            },
-            compress: {
-                name: '格式转换',
-                description: '智能压缩视频文件大小，支持多种格式转换，保持画质的同时减少存储空间。',
-                price: '¥1/分钟',
-                pricePerMinute: 1
-            },
-            filter: {
-                name: '滤镜特效',
-                description: '丰富的滤镜和特效库，一键美化视频画面，提升视觉效果和观感体验。',
-                price: '¥2.5/分钟',
-                pricePerMinute: 2.5
-            },
-            enhance: {
-                name: '画质增强',
-                description: 'AI画质增强技术，去除噪点、提升清晰度，让老视频焕发新生。',
-                price: '¥3/分钟',
-                pricePerMinute: 3
-            },
-            background: {
-                name: '背景处理',
-                description: '智能识别人物主体，替换或模糊背景，创造专业级视频效果。',
-                price: '¥4/分钟',
-                pricePerMinute: 4
-            },
-            subtitle: {
-                name: '字幕处理',
-                description: '自动提取视频字幕，支持多语言识别，或为视频添加自定义字幕。',
-                price: '¥1.5/分钟',
-                pricePerMinute: 1.5
-            },
-            watermark: {
-                name: '水印管理',
-                description: '为视频添加个性化水印，支持文字、图片水印，保护原创内容。',
-                price: '¥1/分钟',
-                pricePerMinute: 1
-            }
-        };
+        // 使用全局视频处理器
+        const processor = window.videoProcessor;
 
-        // 能力选择处理
-        document.querySelectorAll('.capability-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const capability = this.dataset.capability;
-                selectCapability(capability);
-            });
+        // 设置事件监听器
+        document.addEventListener('DOMContentLoaded', function() {
+            // 等待处理器加载完成
+            setTimeout(() => {
+                setupEventListeners();
+                initializeUI();
+            }, 100);
         });
+
+        function setupEventListeners() {
+            // 能力选择处理
+            document.querySelectorAll('.capability-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const capability = this.dataset.capability;
+                    selectCapability(capability);
+                });
+            });
+
+            // 监听处理器事件
+            document.addEventListener('capabilityChanged', (event) => {
+                updateUIFromProcessor(event.detail);
+            });
+
+            document.addEventListener('fileInfoUpdated', (event) => {
+                showFileInfo(event.detail);
+            });
+
+            document.addEventListener('costUpdated', (event) => {
+                updateCostDisplay(event.detail);
+            });
+
+            document.addEventListener('processingProgress', (event) => {
+                updateProgressDisplay(event.detail);
+            });
+
+            document.addEventListener('fileRemoved', () => {
+                clearFileDisplay();
+            });
+        }
 
         function selectCapability(capability) {
             // 更新选中状态
@@ -433,45 +420,49 @@
             });
 
             const selectedCard = document.querySelector(`[data-capability="${capability}"]`);
-            selectedCard.classList.remove('bg-slate-700', 'hover:bg-slate-600');
-            selectedCard.classList.add('active', 'bg-blue-600/20', 'border-blue-500/50');
+            if (selectedCard) {
+                selectedCard.classList.remove('bg-slate-700', 'hover:bg-slate-600');
+                selectedCard.classList.add('active', 'bg-blue-600/20', 'border-blue-500/50');
+            }
 
+            // 使用处理器选择能力
+            processor.selectCapability(capability);
             selectedCapability = capability;
-            const config = capabilityConfigs[capability];
+        }
 
+        function updateUIFromProcessor(detail) {
+            const { capability, capabilityId } = detail;
+            
             // 更新当前选择显示
             document.getElementById('selectedCapability').textContent = 
-                `${config.name} - ${config.description.substring(0, 30)}...`;
+                `${capability.name} - ${capability.description.substring(0, 30)}...`;
             document.getElementById('selectedPrice').textContent = 
-                `起价: ${config.price}`;
+                `起价: ${capability.price}`;
 
             // 更新功能说明
             document.getElementById('capabilityDescription').innerHTML = 
-                `<p><strong>${config.name}：</strong>${config.description}</p>`;
+                `<p><strong>${capability.name}：</strong>${capability.description}</p>`;
 
             // 更新配置面板
-            updateConfigPanel(capability);
-
-            // 重新计算成本
-            if (uploadedFile) {
-                updateCostEstimate(uploadedFile);
-            }
+            updateConfigPanel(capabilityId);
         }
 
         function updateConfigPanel(capability) {
-            const configPanel = document.getElementById('configPanel');
-            
             // 隐藏所有配置
-            document.getElementById('eraserConfig').style.display = 'none';
-            document.getElementById('otherConfigs').style.display = 'none';
+            const eraserConfig = document.getElementById('eraserConfig');
+            const otherConfigs = document.getElementById('otherConfigs');
+            
+            if (eraserConfig) eraserConfig.style.display = 'none';
+            if (otherConfigs) otherConfigs.style.display = 'none';
 
             if (capability === 'eraser') {
-                document.getElementById('eraserConfig').style.display = 'block';
+                if (eraserConfig) eraserConfig.style.display = 'block';
             } else {
                 // 为其他功能显示通用配置
-                const otherConfigs = document.getElementById('otherConfigs');
-                otherConfigs.style.display = 'block';
-                otherConfigs.innerHTML = generateConfigForCapability(capability);
+                if (otherConfigs) {
+                    otherConfigs.style.display = 'block';
+                    otherConfigs.innerHTML = processor.generateConfigHTML(capability);
+                }
             }
         }
 
@@ -594,39 +585,20 @@
 
         // 处理上传的文件
         function handleFile(file) {
-            // 验证文件类型
-            if (!file.type.startsWith('video/')) {
-                alert('请选择视频文件！');
-                return;
+            if (processor.handleFileUpload(file)) {
+                uploadedFile = file;
+                // 启用处理按钮
+                const btn = document.getElementById('startProcessBtn');
+                if (btn) btn.disabled = false;
             }
-
-            // 验证文件大小（500MB限制）
-            if (file.size > 500 * 1024 * 1024) {
-                alert('文件大小不能超过500MB！');
-                return;
-            }
-
-            uploadedFile = file;
-            
-            // 显示文件信息
-            showFileInfo(file);
-            
-            // 启用处理按钮
-            document.getElementById('startProcessBtn').disabled = false;
-            
-            // 更新成本预估
-            updateCostEstimate(file);
         }
 
         // 显示文件信息
-        function showFileInfo(file) {
+        function showFileInfo(fileInfo) {
             const processingList = document.getElementById('processingList');
             const videoList = document.getElementById('videoList');
             
-            processingList.style.display = 'block';
-            
-            const fileSize = (file.size / (1024 * 1024)).toFixed(2);
-            const capabilityName = capabilityConfigs[selectedCapability].name;
+            if (processingList) processingList.style.display = 'block';
             
             const videoItem = `
                 <div class="flex items-center space-x-4 p-4 bg-slate-700/50 rounded-lg" id="videoItem">
@@ -634,8 +606,8 @@
                         <i class="fas fa-video text-white text-sm"></i>
                     </div>
                     <div class="flex-1">
-                        <h4 class="font-semibold text-white">${file.name}</h4>
-                        <div class="text-sm text-gray-400">大小: ${fileSize}MB | 处理: ${capabilityName}</div>
+                        <h4 class="font-semibold text-white">${fileInfo.name}</h4>
+                        <div class="text-sm text-gray-400">大小: ${fileInfo.size}MB | 处理: ${fileInfo.capability}</div>
                         <div class="text-sm text-blue-400">等待处理...</div>
                     </div>
                     <div class="flex space-x-2">
@@ -646,7 +618,100 @@
                 </div>
             `;
             
-            videoList.innerHTML = videoItem;
+            if (videoList) videoList.innerHTML = videoItem;
+        }
+
+        // 更新费用显示
+        function updateCostDisplay(estimation) {
+            const elements = {
+                duration: document.getElementById('estimatedDuration'),
+                cost: document.getElementById('estimatedCost'),
+                total: document.getElementById('totalCost')
+            };
+
+            if (elements.duration) elements.duration.textContent = `约 ${estimation.duration} 分钟`;
+            if (elements.cost) elements.cost.textContent = `¥${estimation.cost.toFixed(1)}`;
+            
+            if (elements.total) {
+                if (estimation.freeTrialCost <= 0) {
+                    elements.total.textContent = '免费试用';
+                } else {
+                    elements.total.textContent = `¥${estimation.freeTrialCost.toFixed(1)}`;
+                }
+            }
+        }
+
+        // 更新进度显示
+        function updateProgressDisplay(detail) {
+            const { progress, capabilityName, completed } = detail;
+            const videoItem = document.getElementById('videoItem');
+            
+            if (!videoItem) return;
+
+            const statusElement = videoItem.querySelector('.text-blue-400');
+            if (!statusElement) return;
+
+            if (completed) {
+                statusElement.textContent = `${capabilityName}完成！`;
+                statusElement.className = 'text-sm text-green-400';
+                
+                // 添加下载按钮
+                const progressContainer = videoItem.querySelector('.progress-container');
+                if (progressContainer) {
+                    progressContainer.innerHTML = `
+                        <i class="fas fa-check mr-1"></i>${capabilityName}完成 
+                        <button class="ml-4 bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs">
+                            <i class="fas fa-download mr-1"></i>下载
+                        </button>
+                    `;
+                }
+                
+                // 重置处理按钮
+                const startBtn = document.getElementById('startProcessBtn');
+                if (startBtn) {
+                    startBtn.disabled = false;
+                    startBtn.innerHTML = '<i class="fas fa-play mr-2"></i>开始处理';
+                }
+                isProcessing = false;
+            } else {
+                // 更新进度
+                if (!videoItem.querySelector('.progress-container')) {
+                    const progressElement = document.createElement('div');
+                    progressElement.className = 'mt-2 progress-container';
+                    progressElement.innerHTML = `
+                        <div class="w-full bg-slate-600 rounded-full h-2">
+                            <div class="progress-bar bg-gradient-to-r from-blue-500 to-green-500 h-2 rounded-full transition-all duration-300" style="width: ${progress}%"></div>
+                        </div>
+                        <div class="text-xs text-blue-400 mt-1">${capabilityName}中... ${progress}%</div>
+                    `;
+                    statusElement.parentElement.appendChild(progressElement);
+                    statusElement.textContent = `正在${capabilityName}...`;
+                } else {
+                    // 更新现有进度
+                    const progressBar = videoItem.querySelector('.progress-bar');
+                    const progressText = videoItem.querySelector('.progress-container .text-xs');
+                    
+                    if (progressBar) progressBar.style.width = `${progress}%`;
+                    if (progressText) progressText.textContent = `${capabilityName}中... ${progress}%`;
+                }
+            }
+        }
+
+        // 清除文件显示
+        function clearFileDisplay() {
+            const processingList = document.getElementById('processingList');
+            const startBtn = document.getElementById('startProcessBtn');
+            const costElements = ['estimatedDuration', 'estimatedCost', 'totalCost'];
+            
+            if (processingList) processingList.style.display = 'none';
+            if (startBtn) startBtn.disabled = true;
+            
+            costElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.textContent = id === 'totalCost' ? '免费试用' : '--';
+            });
+            
+            uploadedFile = null;
         }
 
         // 更新成本预估
@@ -669,77 +734,31 @@
 
         // 移除文件
         function removeFile() {
-            uploadedFile = null;
-            document.getElementById('processingList').style.display = 'none';
-            document.getElementById('startProcessBtn').disabled = true;
-            document.getElementById('estimatedDuration').textContent = '--';
-            document.getElementById('estimatedCost').textContent = '--';
-            document.getElementById('totalCost').textContent = '免费试用';
-            document.getElementById('fileInput').value = '';
+            processor.removeFile();
+            const fileInput = document.getElementById('fileInput');
+            if (fileInput) fileInput.value = '';
         }
 
-        // 开始处理
-        document.getElementById('startProcessBtn').addEventListener('click', function() {
-            if (!uploadedFile || isProcessing) return;
-            
-            isProcessing = true;
-            this.disabled = true;
-            this.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>正在${capabilityConfigs[selectedCapability].name}...`;
-            
-            // 模拟处理过程
-            simulateProcessing();
-        });
+        // 初始化UI
+        function initializeUI() {
+            // 设置开始处理按钮事件
+            const startBtn = document.getElementById('startProcessBtn');
+            if (startBtn) {
+                startBtn.addEventListener('click', async function() {
+                    if (!uploadedFile || isProcessing) return;
+                    
+                    isProcessing = true;
+                    this.disabled = true;
+                    const capability = processor.getCapability(selectedCapability);
+                    this.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>正在${capability.name}...`;
+                    
+                    // 开始处理
+                    await processor.startProcessing();
+                });
+            }
 
-        // 模拟处理过程
-        function simulateProcessing() {
-            const videoItem = document.getElementById('videoItem');
-            const statusElement = videoItem.querySelector('.text-blue-400');
-            const capabilityName = capabilityConfigs[selectedCapability].name;
-            
-            let progress = 0;
-            const progressElement = document.createElement('div');
-            progressElement.className = 'mt-2';
-            progressElement.innerHTML = `
-                <div class="w-full bg-slate-600 rounded-full h-2">
-                    <div class="progress-bar h-2 rounded-full" style="width: 0%"></div>
-                </div>
-                <div class="text-xs text-blue-400 mt-1">${capabilityName}中... 0%</div>
-            `;
-            
-            statusElement.parentElement.appendChild(progressElement);
-            statusElement.textContent = `正在${capabilityName}...`;
-            
-            const progressBar = progressElement.querySelector('.progress-bar');
-            const progressText = progressElement.querySelector('.text-xs');
-            
-            const interval = setInterval(() => {
-                progress += Math.random() * 15;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
-                    
-                    // 处理完成
-                    statusElement.textContent = `${capabilityName}完成！`;
-                    statusElement.className = 'text-sm text-green-400';
-                    progressText.innerHTML = `
-                        <i class="fas fa-check mr-1"></i>${capabilityName}完成 
-                        <button class="ml-4 bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs">
-                            <i class="fas fa-download mr-1"></i>下载
-                        </button>
-                    `;
-                    
-                    // 重置按钮
-                    const startBtn = document.getElementById('startProcessBtn');
-                    startBtn.disabled = false;
-                    startBtn.innerHTML = '<i class="fas fa-play mr-2"></i>开始处理';
-                    isProcessing = false;
-                }
-                
-                progressBar.style.width = progress + '%';
-                if (progress < 100) {
-                    progressText.textContent = `${capabilityName}中... ${Math.floor(progress)}%`;
-                }
-            }, 300);
+            // 默认选择智能擦除
+            selectCapability('eraser');
         }
 
         // 处理来自父页面的导航参数
@@ -747,17 +766,11 @@
             if (params.activeFunction) {
                 // 如果指定了功能，切换到对应的能力
                 const capability = params.activeFunction;
-                if (capabilityConfigs[capability]) {
+                if (processor && processor.capabilities[capability]) {
                     selectCapability(capability);
                 }
             }
         };
-
-        // 页面加载完成后初始化
-        document.addEventListener('DOMContentLoaded', function() {
-            // 默认选择智能擦除
-            selectCapability('eraser');
-        });
     </script>
 </body>
 </html> 
