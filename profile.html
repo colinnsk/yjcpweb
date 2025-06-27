@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户中心 - 一键出片</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stats-card {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border: 1px solid #475569;
+            transition: all 0.3s ease;
+        }
+        .stats-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% - 1rem);
+            background: #374151;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 0.25rem;
+            top: 1rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: #3b82f6;
+        }
+        .timeline-item:last-child::before {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <nav class="bg-slate-900/80 backdrop-blur-sm border-b border-slate-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <div class="text-xl font-bold gradient-text">
+                        <i class="fas fa-user mr-2"></i>用户中心
+                    </div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="text-white hover:text-blue-400 px-3 py-2 text-sm font-medium border-b-2 border-blue-500">个人信息</a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400 px-3 py-2 text-sm font-medium">使用记录</a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400 px-3 py-2 text-sm font-medium">积分管理</a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400 px-3 py-2 text-sm font-medium">订阅管理</a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400 px-3 py-2 text-sm font-medium">账户设置</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-yellow-400 font-semibold">
+                        <i class="fas fa-coins mr-1"></i>余额: 1,580黄豆
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" 
+                             alt="头像" class="w-8 h-8 rounded-full">
+                        <span class="text-white font-medium">张创作者</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- 用户信息卡片 -->
+        <div class="bg-blue-600/20 border border-blue-500/30 rounded-2xl p-8 mb-8">
+            <div class="flex items-center space-x-6">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=96&h=96&fit=crop&crop=face" 
+                         alt="用户头像" class="w-24 h-24 rounded-full border-4 border-blue-400">
+                    <div class="absolute -bottom-2 -right-2 bg-green-500 w-6 h-6 rounded-full border-2 border-white flex items-center justify-center">
+                        <i class="fas fa-check text-white text-xs"></i>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <h2 class="text-3xl font-bold text-white mb-2">张创作者</h2>
+                    <div class="flex items-center space-x-4 text-gray-300">
+                        <span><i class="fas fa-envelope mr-2"></i>creator@example.com</span>
+                        <span><i class="fas fa-calendar mr-2"></i>加入于 2024年1月</span>
+                        <span class="bg-yellow-600 text-white text-xs px-3 py-1 rounded-full">
+                            <i class="fas fa-crown mr-1"></i>创作版会员
+                        </span>
+                    </div>
+                    <div class="mt-4 flex space-x-4">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">
+                            <i class="fas fa-edit mr-2"></i>编辑资料
+                        </button>
+                        <button class="border border-gray-600 text-gray-300 hover:text-white hover:border-white px-6 py-2 rounded-lg">
+                            <i class="fas fa-upload mr-2"></i>上传头像
+                        </button>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="text-4xl font-bold text-blue-400">Level 5</div>
+                    <div class="text-sm text-gray-400">活跃创作者</div>
+                    <div class="mt-2 w-32 bg-slate-700 rounded-full h-2">
+                        <div class="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full w-4/5"></div>
+                    </div>
+                    <div class="text-xs text-gray-400 mt-1">2,350 / 3,000 XP</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 统计数据 -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 hover:transform hover:-translate-y-1 transition-all">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-400 text-sm">总处理视频</p>
+                        <p class="text-3xl font-bold text-white">247</p>
+                        <p class="text-xs text-green-400 mt-1">
+                            <i class="fas fa-arrow-up mr-1"></i>+12 本月
+                        </p>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-video text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 hover:transform hover:-translate-y-1 transition-all">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-400 text-sm">成功处理率</p>
+                        <p class="text-3xl font-bold text-white">98.8%</p>
+                        <p class="text-xs text-green-400 mt-1">
+                            <i class="fas fa-check mr-1"></i>优秀表现
+                        </p>
+                    </div>
+                    <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-check-circle text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 hover:transform hover:-translate-y-1 transition-all">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-400 text-sm">累计节省时间</p>
+                        <p class="text-3xl font-bold text-white">156h</p>
+                        <p class="text-xs text-blue-400 mt-1">
+                            <i class="fas fa-clock mr-1"></i>约20个工作日
+                        </p>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-hourglass-half text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 hover:transform hover:-translate-y-1 transition-all">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-400 text-sm">累计消费</p>
+                        <p class="text-3xl font-bold text-white">¥1,247</p>
+                        <p class="text-xs text-yellow-400 mt-1">
+                            <i class="fas fa-wallet mr-1"></i>本月 ¥156
+                        </p>
+                    </div>
+                    <div class="w-12 h-12 bg-yellow-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-coins text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- 左侧：使用记录 -->
+            <div class="lg:col-span-2">
+                <!-- 最近活动 -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-white">最近活动</h3>
+                        <button class="text-blue-400 hover:text-blue-300 text-sm">
+                            查看全部 <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="relative pl-8">
+                            <div class="absolute left-2 top-4 w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <div class="absolute left-2.5 top-6 w-0.5 h-16 bg-slate-600"></div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-white">视频擦除处理完成</h4>
+                                    <p class="text-sm text-gray-400">短剧素材_01.mp4 • 消耗 120黄豆</p>
+                                    <p class="text-xs text-gray-500">2024-03-20 14:30</p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <span class="bg-green-600 text-white text-xs px-2 py-1 rounded-full">成功</span>
+                                    <button class="text-blue-400 hover:text-blue-300">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative pl-8">
+                            <div class="absolute left-2 top-4 w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <div class="absolute left-2.5 top-6 w-0.5 h-16 bg-slate-600"></div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-white">多语言翻译处理</h4>
+                                    <p class="text-sm text-gray-400">宣传视频.mp4 翻译为英语 • 消耗 280黄豆</p>
+                                    <p class="text-xs text-gray-500">2024-03-20 11:15</p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">处理中</span>
+                                    <button class="text-gray-400">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative pl-8">
+                            <div class="absolute left-2 top-4 w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <div class="absolute left-2.5 top-6 w-0.5 h-16 bg-slate-600"></div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-white">数智人生成完成</h4>
+                                    <p class="text-sm text-gray-400">虚拟主播_小美.mp4 • 消耗 500黄豆</p>
+                                    <p class="text-xs text-gray-500">2024-03-19 16:45</p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <span class="bg-green-600 text-white text-xs px-2 py-1 rounded-full">成功</span>
+                                    <button class="text-blue-400 hover:text-blue-300">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative pl-8">
+                            <div class="absolute left-2 top-4 w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-white">积分充值</h4>
+                                    <p class="text-sm text-gray-400">购买创作版套餐 • 获得 6000黄豆</p>
+                                    <p class="text-xs text-gray-500">2024-03-19 09:20</p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <span class="bg-purple-600 text-white text-xs px-2 py-1 rounded-full">充值</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 使用统计图表 -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <h3 class="text-xl font-bold text-white mb-6">使用统计</h3>
+                    <div class="h-64 bg-gradient-to-br from-slate-700 to-slate-600 rounded-lg flex items-center justify-center">
+                        <div class="text-center">
+                            <i class="fas fa-chart-bar text-4xl text-blue-400 mb-4"></i>
+                            <p class="text-gray-300">📊 这里展示使用统计图表</p>
+                            <p class="text-sm text-gray-400 mt-2">显示最近30天的功能使用分布</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：积分管理和快速操作 -->
+            <div class="lg:col-span-1">
+                <!-- 积分管理 -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-8">
+                    <h3 class="text-lg font-bold text-white mb-6">积分管理</h3>
+                    
+                    <div class="bg-yellow-600/20 border border-yellow-500/30 rounded-lg p-4 mb-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-yellow-400 mb-2">1,580</div>
+                            <div class="text-sm text-gray-300">当前黄豆余额</div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
+                            <div>
+                                <h4 class="font-semibold text-white text-sm">黄豆币</h4>
+                                <p class="text-xs text-gray-400">通用积分</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-white font-semibold">1,580</div>
+                                <div class="text-xs text-gray-400">可用额度</div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
+                            <div>
+                                <h4 class="font-semibold text-white text-sm">擦除币</h4>
+                                <p class="text-xs text-gray-400">8折专享</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-white font-semibold">240</div>
+                                <div class="text-xs text-gray-400">专项积分</div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
+                            <div>
+                                <h4 class="font-semibold text-white text-sm">翻译币</h4>
+                                <p class="text-xs text-gray-400">8.5折专享</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-white font-semibold">150</div>
+                                <div class="text-xs text-gray-400">专项积分</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 space-y-3">
+                        <button class="w-full bg-gradient-to-r from-yellow-600 to-orange-600 text-white py-3 rounded-lg font-semibold">
+                            <i class="fas fa-plus mr-2"></i>充值积分
+                        </button>
+                        <button class="w-full border border-gray-600 text-gray-300 hover:text-white hover:border-white py-2 rounded-lg">
+                            <i class="fas fa-history mr-2"></i>消费记录
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 会员信息 -->
+                <div class="bg-purple-600/20 border border-purple-500/30 rounded-xl p-6 mb-8">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-crown text-3xl text-yellow-400 mb-3"></i>
+                        <h3 class="text-lg font-bold text-white">创作版会员</h3>
+                        <p class="text-sm text-gray-300">享受8.5折优惠价格</p>
+                    </div>
+                    
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">到期时间:</span>
+                            <span class="text-white">2024-04-20</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">剩余天数:</span>
+                            <span class="text-green-400">31天</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">自动续费:</span>
+                            <span class="text-blue-400">已开启</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 space-y-2">
+                        <button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg text-sm">
+                            <i class="fas fa-upgrade mr-2"></i>升级专业版
+                        </button>
+                        <button class="w-full border border-gray-600 text-gray-300 hover:text-white hover:border-white py-2 rounded-lg text-sm">
+                            <i class="fas fa-cog mr-2"></i>续费设置
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 快速操作 -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <h3 class="text-lg font-bold text-white mb-6">快速操作</h3>
+                    
+                    <div class="space-y-3">
+                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg text-left">
+                            <div class="flex items-center">
+                                <i class="fas fa-magic text-lg mr-3"></i>
+                                <span class="font-semibold">开始新项目</span>
+                            </div>
+                        </button>
+
+                        <button class="w-full bg-green-600 hover:bg-green-700 text-white p-3 rounded-lg text-left">
+                            <div class="flex items-center">
+                                <i class="fas fa-download text-lg mr-3"></i>
+                                <span class="font-semibold">下载历史文件</span>
+                            </div>
+                        </button>
+
+                        <button class="w-full bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-lg text-left">
+                            <div class="flex items-center">
+                                <i class="fas fa-share text-lg mr-3"></i>
+                                <span class="font-semibold">邀请好友</span>
+                            </div>
+                        </button>
+
+                        <button class="w-full bg-slate-700 hover:bg-slate-600 text-white p-3 rounded-lg text-left">
+                            <div class="flex items-center">
+                                <i class="fas fa-headset text-lg mr-3"></i>
+                                <span class="font-semibold">联系客服</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 页面导航函数
+        function navigateToWorkspace() {
+            if (window.parentNavigate) {
+                window.parentNavigate('workspace');
+            } else {
+                console.log('导航到工作台');
+            }
+        }
+
+        function navigateToPricing() {
+            if (window.parentNavigate) {
+                window.parentNavigate('pricing');
+            } else {
+                console.log('导航到定价页面');
+            }
+        }
+
+        function showRechargeDialog() {
+            alert('充值功能：\n\n💰 选择充值金额\n📱 支持微信、支付宝\n💳 企业用户支持对公转账\n\n客服热线：400-123-4567');
+        }
+
+        function showConsumptionHistory() {
+            alert('消费记录功能展示：\n\n📊 详细消费明细\n📈 使用趋势分析\n💾 支持导出报表\n\n点击确定查看详细记录');
+        }
+
+        function upgradeAccount() {
+            if (window.parentNavigate) {
+                window.parentNavigate('pricing', { recommendPlan: 'pro' });
+            } else {
+                console.log('导航到定价页面 - 专业版');
+            }
+        }
+
+        function manageSubscription() {
+            alert('续费设置：\n\n🔄 自动续费管理\n⏰ 续费提醒设置\n💸 付费方式管理\n📧 账单邮件通知');
+        }
+
+        function inviteFriends() {
+            const inviteCode = 'YJC' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            alert(`邀请好友功能：\n\n🎁 您的专属邀请码：${inviteCode}\n\n奖励规则：\n• 好友注册：双方各得200黄豆\n• 好友首次付费：您得500黄豆\n• 好友累计消费满500元：您得1000黄豆\n\n分享链接将复制到剪贴板`);
+        }
+
+        function contactCustomerService() {
+            alert('客服支持：\n\n💬 在线客服：24小时在线\n📞 电话客服：400-123-4567\n📧 邮件支持：support@yijianchu.com\n🎯 专属QQ群：123456789\n\n工作时间：7×24小时服务');
+        }
+
+        // 处理来自父页面的导航参数
+        window.handleNavigation = function(params) {
+            if (params.action === 'upgrade') {
+                // 显示升级成功信息
+                showUpgradeSuccess(params);
+            }
+            if (params.showSection) {
+                // 滚动到指定区域
+                const section = document.getElementById(params.showSection);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        };
+
+        function showUpgradeSuccess(params) {
+            const planName = {
+                'light': '轻享版',
+                'creator': '创作版', 
+                'pro': '专业版',
+                'enterprise': '企业版'
+            }[params.plan] || '套餐';
+
+            alert(`🎉 恭喜！套餐升级成功\n\n📦 套餐：${planName}\n💰 价格：¥${params.price}/月\n🟡 黄豆币：${params.beans}个\n\n新套餐将在下个计费周期生效，感谢您的支持！`);
+            
+            // 更新页面显示（模拟）
+            updateMembershipDisplay(params.plan);
+        }
+
+        function updateMembershipDisplay(plan) {
+            const membershipDiv = document.querySelector('.bg-purple-600\\/20');
+            if (membershipDiv) {
+                const planNames = {
+                    'light': '轻享版会员',
+                    'creator': '创作版会员', 
+                    'pro': '专业版会员',
+                    'enterprise': '企业版会员'
+                };
+                
+                const titleElement = membershipDiv.querySelector('h3');
+                if (titleElement) {
+                    titleElement.textContent = planNames[plan] || '会员';
+                }
+            }
+        }
+
+        // 为按钮添加点击事件
+        document.addEventListener('DOMContentLoaded', function() {
+            // 充值积分按钮
+            const rechargeBtn = document.querySelector('button[class*="yellow-600"]');
+            if (rechargeBtn) {
+                rechargeBtn.addEventListener('click', showRechargeDialog);
+            }
+
+            // 消费记录按钮
+            const historyBtn = document.querySelector('button[class*="border-gray-600"]');
+            if (historyBtn && historyBtn.textContent.includes('消费记录')) {
+                historyBtn.addEventListener('click', showConsumptionHistory);
+            }
+
+            // 升级专业版按钮
+            const upgradeBtn = document.querySelector('button[class*="purple-600"]:not([class*="yellow"])');
+            if (upgradeBtn && upgradeBtn.textContent.includes('升级')) {
+                upgradeBtn.addEventListener('click', upgradeAccount);
+            }
+
+            // 续费设置按钮
+            const renewBtn = document.querySelector('button[class*="border-gray-600"]:last-of-type');
+            if (renewBtn && renewBtn.textContent.includes('续费')) {
+                renewBtn.addEventListener('click', manageSubscription);
+            }
+
+            // 快速操作按钮
+            const quickBtns = document.querySelectorAll('.bg-slate-800 .space-y-3 button');
+            quickBtns.forEach((btn, index) => {
+                switch(index) {
+                    case 0: // 开始新项目
+                        btn.addEventListener('click', navigateToWorkspace);
+                        break;
+                    case 1: // 下载历史文件
+                        btn.addEventListener('click', () => {
+                            alert('历史文件下载：\n\n📁 可下载最近30天内的所有处理文件\n💾 支持批量打包下载\n☁️  文件保存期限：90天\n\n正在准备下载链接...');
+                        });
+                        break;
+                    case 2: // 邀请好友
+                        btn.addEventListener('click', inviteFriends);
+                        break;
+                    case 3: // 联系客服
+                        btn.addEventListener('click', contactCustomerService);
+                        break;
+                }
+            });
+        });
+
+        // 模拟数据更新
+        function updateUserStats() {
+            // 这里可以添加实时数据更新逻辑
+            console.log('用户数据已更新');
+        }
+
+        // 页面加载完成后定期更新数据
+        setInterval(updateUserStats, 30000); // 每30秒更新一次
+    </script>
+</body>
+</html> 

@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频处理工作台 - MVP版本</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+        }
+        .drop-zone {
+            border: 2px dashed #64748b;
+            transition: all 0.3s ease;
+            min-height: 300px;
+        }
+        .drop-zone.dragover {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            height: 8px;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .mvp-badge {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+        .capability-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .capability-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        .capability-card.active {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .capability-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部工具栏 -->
+    <header class="bg-slate-900/80 backdrop-blur-sm border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-6">
+                    <h1 class="text-2xl font-bold text-white">
+                        <i class="fas fa-magic mr-2 text-blue-400"></i>视频处理工作台
+                        <span class="mvp-badge ml-3">MVP</span>
+                    </h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-green-400 font-semibold text-sm">
+                        <i class="fas fa-gift mr-1"></i>免费试用: 10分钟
+                    </div>
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                        <i class="fas fa-user mr-2"></i>登录使用
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 py-6">
+        <!-- MVP说明横幅 -->
+        <div class="bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 rounded-xl p-6 mb-8">
+            <div class="text-center">
+                <h2 class="text-xl font-bold text-white mb-2">🎬 视频原子能力处理中心</h2>
+                <p class="text-gray-300 text-sm">选择所需的视频处理能力，简单上传，AI自动处理，快速获得结果</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            
+            <!-- 左侧：视频原子能力选择 -->
+            <div class="lg:col-span-1">
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <h2 class="text-xl font-bold text-white mb-6">
+                        <span class="text-blue-400">步骤 1:</span> 选择处理能力
+                    </h2>
+                    
+                    <!-- 基础处理能力 -->
+                    <div class="mb-6">
+                        <h3 class="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wide">基础处理</h3>
+                        <div class="space-y-2">
+                            <div class="capability-card bg-blue-600/20 border border-blue-500/50 rounded-lg p-3 active" data-capability="eraser">
+                                <div class="flex items-center">
+                                    <div class="capability-icon bg-gradient-to-r from-blue-500 to-blue-600">
+                                        <i class="fas fa-eraser text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-white text-sm">智能擦除</h4>
+                                        <p class="text-xs text-gray-300">去除字幕、水印、Logo</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="trim">
+                                <div class="flex items-center">
+                                    <div class="capability-icon bg-gradient-to-r from-green-500 to-green-600">
+                                        <i class="fas fa-cut text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-white text-sm">视频剪辑</h4>
+                                        <p class="text-xs text-gray-300">裁剪、分割、合并</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="compress">
+                                <div class="flex items-center">
+                                    <div class="capability-icon bg-gradient-to-r from-purple-500 to-purple-600">
+                                        <i class="fas fa-compress-alt text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-white text-sm">格式转换</h4>
+                                        <p class="text-xs text-gray-300">压缩、格式转换</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 视觉增强 -->
+                    <div class="mb-6">
+                        <h3 class="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wide">视觉增强</h3>
+                        <div class="space-y-2">
+                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="filter">
+                                <div class="flex items-center">
+                                    <div class="capability-icon bg-gradient-to-r from-pink-500 to-pink-600">
+                                        <i class="fas fa-palette text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-white text-sm">滤镜特效</h4>
+                                        <p class="text-xs text-gray-300">美化、调色、特效</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="enhance">
+                                <div class="flex items-center">
+                                    <div class="capability-icon bg-gradient-to-r from-yellow-500 to-yellow-600">
+                                        <i class="fas fa-magic text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-white text-sm">画质增强</h4>
+                                        <p class="text-xs text-gray-300">去噪、锐化、超分</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="background">
+                                <div class="flex items-center">
+                                    <div class="capability-icon bg-gradient-to-r from-cyan-500 to-cyan-600">
+                                        <i class="fas fa-image text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-white text-sm">背景处理</h4>
+                                        <p class="text-xs text-gray-300">替换、模糊背景</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 内容处理 -->
+                    <div class="mb-6">
+                        <h3 class="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wide">内容处理</h3>
+                        <div class="space-y-2">
+                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="subtitle">
+                                <div class="flex items-center">
+                                    <div class="capability-icon bg-gradient-to-r from-indigo-500 to-indigo-600">
+                                        <i class="fas fa-closed-captioning text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-white text-sm">字幕处理</h4>
+                                        <p class="text-xs text-gray-300">提取、添加字幕</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="watermark">
+                                <div class="flex items-center">
+                                    <div class="capability-icon bg-gradient-to-r from-orange-500 to-orange-600">
+                                        <i class="fas fa-copyright text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-white text-sm">水印管理</h4>
+                                        <p class="text-xs text-gray-300">添加、定制水印</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 当前选择显示 -->
+                    <div class="bg-blue-600/20 border border-blue-500/30 rounded-lg p-4">
+                        <h4 class="font-semibold text-white mb-2">
+                            <i class="fas fa-check-circle text-blue-400 mr-2"></i>当前选择
+                        </h4>
+                        <div class="text-sm text-gray-300" id="selectedCapability">
+                            智能擦除 - 去除视频中的字幕、水印、Logo
+                        </div>
+                        <div class="text-xs text-blue-400 mt-2" id="selectedPrice">
+                            起价: ¥2/分钟
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 中间：视频上传和预览区域 -->
+            <div class="lg:col-span-2">
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-6">
+                    <h2 class="text-xl font-bold text-white mb-4">
+                        <span class="text-purple-400">步骤 2:</span> 上传视频
+                    </h2>
+                    
+                    <!-- 简化的上传区域 -->
+                    <div class="drop-zone bg-slate-700/50 rounded-xl p-8 text-center border-slate-600" 
+                         ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                        <div class="mb-6">
+                            <i class="fas fa-cloud-upload-alt text-6xl text-blue-400 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-white mb-2">拖拽视频文件到这里</h3>
+                            <p class="text-gray-400 mb-4">或者点击选择文件</p>
+                            <input type="file" id="fileInput" accept="video/*" style="display: none;" onchange="handleFileSelect(event)">
+                            <button onclick="document.getElementById('fileInput').click()" 
+                                    class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold">
+                                <i class="fas fa-folder-open mr-2"></i>选择视频文件
+                            </button>
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            支持格式：MP4, AVI, MOV, MKV | 最大文件：500MB
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 处理列表 -->
+                <div class="bg-slate-800 rounded-xl border border-slate-700" id="processingList" style="display: none;">
+                    <div class="p-6 border-b border-slate-700">
+                        <h3 class="text-lg font-semibold text-white">
+                            <span class="text-green-400">步骤 3:</span> 处理进度
+                        </h3>
+                    </div>
+                    
+                    <div class="p-6" id="videoList">
+                        <!-- 动态添加的视频项目 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：参数配置面板 -->
+            <div class="lg:col-span-1">
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <h2 class="text-xl font-bold text-white mb-6">
+                        <span class="text-green-400">步骤 4:</span> 处理设置
+                    </h2>
+                    
+                    <!-- 动态配置面板 -->
+                    <div id="configPanel">
+                        <!-- 智能擦除配置 -->
+                        <div id="eraserConfig" class="config-section">
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-3">处理质量</label>
+                                    <div class="grid grid-cols-1 gap-2">
+                                        <button class="bg-blue-600 text-white text-sm py-3 px-4 rounded-lg text-left">
+                                            <div class="font-semibold">高清 1080p</div>
+                                            <div class="text-xs text-blue-200">推荐设置 - ¥2/分钟</div>
+                                        </button>
+                                        <button class="bg-slate-700 text-gray-300 text-sm py-3 px-4 rounded-lg hover:bg-slate-600 text-left">
+                                            <div class="font-semibold">标清 720p</div>
+                                            <div class="text-xs text-gray-400">经济选择 - ¥1/分钟</div>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-3">擦除模式</label>
+                                    <div class="grid grid-cols-1 gap-2">
+                                        <button class="bg-green-600 text-white text-sm py-3 px-4 rounded-lg text-left" id="autoMode">
+                                            <div class="font-semibold">🤖 AI自动识别</div>
+                                            <div class="text-xs text-green-200">智能检测字幕水印</div>
+                                        </button>
+                                        <button class="bg-slate-700 text-gray-300 text-sm py-3 px-4 rounded-lg hover:bg-slate-600 text-left" disabled>
+                                            <div class="font-semibold">✋ 手动选择区域</div>
+                                            <div class="text-xs text-gray-400">Pro版本功能</div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 其他功能配置将动态显示 -->
+                        <div id="otherConfigs" style="display: none;">
+                            <!-- 根据选择的能力动态加载配置选项 -->
+                        </div>
+                    </div>
+
+                    <!-- 成本预估 -->
+                    <div class="bg-blue-600/20 border border-blue-500/30 rounded-lg p-4 mt-6">
+                        <h4 class="font-semibold text-white mb-2">💰 费用预估</h4>
+                        <div class="text-sm text-gray-300 space-y-1">
+                            <div class="flex justify-between">
+                                <span>预计时长:</span>
+                                <span id="estimatedDuration">--</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>处理费用:</span>
+                                <span id="estimatedCost">--</span>
+                            </div>
+                            <div class="border-t border-blue-500/30 pt-2 mt-2">
+                                <div class="flex justify-between font-semibold text-blue-400">
+                                    <span>总计:</span>
+                                    <span id="totalCost">免费试用</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 操作按钮 -->
+                    <div class="space-y-3 mt-6">
+                        <button id="startProcessBtn" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-lg font-semibold" disabled>
+                            <i class="fas fa-play mr-2"></i>开始处理
+                        </button>
+                        <button class="w-full bg-slate-700 hover:bg-slate-600 text-white py-2 rounded-lg">
+                            <i class="fas fa-question-circle mr-2"></i>使用帮助
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 功能介绍 -->
+                <div class="bg-yellow-600/20 border border-yellow-500/30 rounded-xl p-4 mt-6">
+                    <h4 class="font-semibold text-white mb-2">
+                        <i class="fas fa-lightbulb text-yellow-400 mr-2"></i>功能说明
+                    </h4>
+                    <div id="capabilityDescription" class="text-sm text-gray-300">
+                        <p><strong>智能擦除：</strong>使用AI技术自动识别和去除视频中的字幕、水印、Logo等元素，保持视频内容的完整性。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let uploadedFile = null;
+        let isProcessing = false;
+        let selectedCapability = 'eraser';
+
+        // 能力配置数据
+        const capabilityConfigs = {
+            eraser: {
+                name: '智能擦除',
+                description: '使用AI技术自动识别和去除视频中的字幕、水印、Logo等元素，保持视频内容的完整性。',
+                price: '¥2/分钟',
+                pricePerMinute: 2
+            },
+            trim: {
+                name: '视频剪辑',
+                description: '精确裁剪视频片段，支持按时间点分割、多段合并，快速制作精彩集锦。',
+                price: '¥1.5/分钟',
+                pricePerMinute: 1.5
+            },
+            compress: {
+                name: '格式转换',
+                description: '智能压缩视频文件大小，支持多种格式转换，保持画质的同时减少存储空间。',
+                price: '¥1/分钟',
+                pricePerMinute: 1
+            },
+            filter: {
+                name: '滤镜特效',
+                description: '丰富的滤镜和特效库，一键美化视频画面，提升视觉效果和观感体验。',
+                price: '¥2.5/分钟',
+                pricePerMinute: 2.5
+            },
+            enhance: {
+                name: '画质增强',
+                description: 'AI画质增强技术，去除噪点、提升清晰度，让老视频焕发新生。',
+                price: '¥3/分钟',
+                pricePerMinute: 3
+            },
+            background: {
+                name: '背景处理',
+                description: '智能识别人物主体，替换或模糊背景，创造专业级视频效果。',
+                price: '¥4/分钟',
+                pricePerMinute: 4
+            },
+            subtitle: {
+                name: '字幕处理',
+                description: '自动提取视频字幕，支持多语言识别，或为视频添加自定义字幕。',
+                price: '¥1.5/分钟',
+                pricePerMinute: 1.5
+            },
+            watermark: {
+                name: '水印管理',
+                description: '为视频添加个性化水印，支持文字、图片水印，保护原创内容。',
+                price: '¥1/分钟',
+                pricePerMinute: 1
+            }
+        };
+
+        // 能力选择处理
+        document.querySelectorAll('.capability-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const capability = this.dataset.capability;
+                selectCapability(capability);
+            });
+        });
+
+        function selectCapability(capability) {
+            // 更新选中状态
+            document.querySelectorAll('.capability-card').forEach(card => {
+                card.classList.remove('active', 'bg-blue-600/20', 'border-blue-500/50');
+                card.classList.add('bg-slate-700', 'hover:bg-slate-600');
+            });
+
+            const selectedCard = document.querySelector(`[data-capability="${capability}"]`);
+            selectedCard.classList.remove('bg-slate-700', 'hover:bg-slate-600');
+            selectedCard.classList.add('active', 'bg-blue-600/20', 'border-blue-500/50');
+
+            selectedCapability = capability;
+            const config = capabilityConfigs[capability];
+
+            // 更新当前选择显示
+            document.getElementById('selectedCapability').textContent = 
+                `${config.name} - ${config.description.substring(0, 30)}...`;
+            document.getElementById('selectedPrice').textContent = 
+                `起价: ${config.price}`;
+
+            // 更新功能说明
+            document.getElementById('capabilityDescription').innerHTML = 
+                `<p><strong>${config.name}：</strong>${config.description}</p>`;
+
+            // 更新配置面板
+            updateConfigPanel(capability);
+
+            // 重新计算成本
+            if (uploadedFile) {
+                updateCostEstimate(uploadedFile);
+            }
+        }
+
+        function updateConfigPanel(capability) {
+            const configPanel = document.getElementById('configPanel');
+            
+            // 隐藏所有配置
+            document.getElementById('eraserConfig').style.display = 'none';
+            document.getElementById('otherConfigs').style.display = 'none';
+
+            if (capability === 'eraser') {
+                document.getElementById('eraserConfig').style.display = 'block';
+            } else {
+                // 为其他功能显示通用配置
+                const otherConfigs = document.getElementById('otherConfigs');
+                otherConfigs.style.display = 'block';
+                otherConfigs.innerHTML = generateConfigForCapability(capability);
+            }
+        }
+
+        function generateConfigForCapability(capability) {
+            const config = capabilityConfigs[capability];
+            let configHTML = '<div class="space-y-6">';
+
+            switch(capability) {
+                case 'trim':
+                    configHTML += `
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-3">剪辑模式</label>
+                            <div class="grid grid-cols-1 gap-2">
+                                <button class="bg-blue-600 text-white text-sm py-3 px-4 rounded-lg text-left">
+                                    <div class="font-semibold">智能剪辑</div>
+                                    <div class="text-xs text-blue-200">AI识别精彩片段</div>
+                                </button>
+                                <button class="bg-slate-700 text-gray-300 text-sm py-3 px-4 rounded-lg hover:bg-slate-600 text-left">
+                                    <div class="font-semibold">时间点剪辑</div>
+                                    <div class="text-xs text-gray-400">手动设定时间范围</div>
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">时间范围（秒）</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <input type="number" placeholder="开始" class="bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm">
+                                <input type="number" placeholder="结束" class="bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm">
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'compress':
+                    configHTML += `
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-3">输出格式</label>
+                            <select class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm">
+                                <option>MP4 (推荐)</option>
+                                <option>AVI</option>
+                                <option>MOV</option>
+                                <option>MKV</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-3">压缩程度</label>
+                            <div class="grid grid-cols-1 gap-2">
+                                <button class="bg-blue-600 text-white text-sm py-2 px-3 rounded-lg">高质量</button>
+                                <button class="bg-slate-700 text-gray-300 text-sm py-2 px-3 rounded-lg hover:bg-slate-600">平衡</button>
+                                <button class="bg-slate-700 text-gray-300 text-sm py-2 px-3 rounded-lg hover:bg-slate-600">高压缩</button>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'filter':
+                    configHTML += `
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-3">滤镜类型</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button class="bg-blue-600 text-white text-xs py-2 px-2 rounded">复古</button>
+                                <button class="bg-slate-700 text-gray-300 text-xs py-2 px-2 rounded hover:bg-slate-600">清新</button>
+                                <button class="bg-slate-700 text-gray-300 text-xs py-2 px-2 rounded hover:bg-slate-600">暖调</button>
+                                <button class="bg-slate-700 text-gray-300 text-xs py-2 px-2 rounded hover:bg-slate-600">冷调</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">强度调节</label>
+                            <input type="range" class="w-full h-2 bg-slate-600 rounded-lg appearance-none cursor-pointer" min="0" max="100" value="50">
+                        </div>
+                    `;
+                    break;
+                default:
+                    configHTML += `
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-3">处理模式</label>
+                            <div class="grid grid-cols-1 gap-2">
+                                <button class="bg-blue-600 text-white text-sm py-3 px-4 rounded-lg text-left">
+                                    <div class="font-semibold">标准模式</div>
+                                    <div class="text-xs text-blue-200">平衡质量和速度</div>
+                                </button>
+                                <button class="bg-slate-700 text-gray-300 text-sm py-3 px-4 rounded-lg hover:bg-slate-600 text-left">
+                                    <div class="font-semibold">高质量模式</div>
+                                    <div class="text-xs text-gray-400">更好效果，耗时较长</div>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+            }
+
+            configHTML += '</div>';
+            return configHTML;
+        }
+
+        // 文件拖拽处理
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.currentTarget.classList.add('dragover');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('dragover');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        }
+
+        // 文件选择处理
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                handleFile(file);
+            }
+        }
+
+        // 处理上传的文件
+        function handleFile(file) {
+            // 验证文件类型
+            if (!file.type.startsWith('video/')) {
+                alert('请选择视频文件！');
+                return;
+            }
+
+            // 验证文件大小（500MB限制）
+            if (file.size > 500 * 1024 * 1024) {
+                alert('文件大小不能超过500MB！');
+                return;
+            }
+
+            uploadedFile = file;
+            
+            // 显示文件信息
+            showFileInfo(file);
+            
+            // 启用处理按钮
+            document.getElementById('startProcessBtn').disabled = false;
+            
+            // 更新成本预估
+            updateCostEstimate(file);
+        }
+
+        // 显示文件信息
+        function showFileInfo(file) {
+            const processingList = document.getElementById('processingList');
+            const videoList = document.getElementById('videoList');
+            
+            processingList.style.display = 'block';
+            
+            const fileSize = (file.size / (1024 * 1024)).toFixed(2);
+            const capabilityName = capabilityConfigs[selectedCapability].name;
+            
+            const videoItem = `
+                <div class="flex items-center space-x-4 p-4 bg-slate-700/50 rounded-lg" id="videoItem">
+                    <div class="w-16 h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-video text-white text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-semibold text-white">${file.name}</h4>
+                        <div class="text-sm text-gray-400">大小: ${fileSize}MB | 处理: ${capabilityName}</div>
+                        <div class="text-sm text-blue-400">等待处理...</div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="text-gray-400 p-2 rounded" onclick="removeFile()">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            videoList.innerHTML = videoItem;
+        }
+
+        // 更新成本预估
+        function updateCostEstimate(file) {
+            // 估算视频时长（这里简化处理，实际需要读取视频元数据）
+            const estimatedMinutes = Math.max(1, Math.floor(file.size / (1024 * 1024) / 10)); // 简单估算
+            const pricePerMinute = capabilityConfigs[selectedCapability].pricePerMinute;
+            
+            document.getElementById('estimatedDuration').textContent = `约 ${estimatedMinutes} 分钟`;
+            document.getElementById('estimatedCost').textContent = `¥${(estimatedMinutes * pricePerMinute).toFixed(1)}`;
+            
+            // 免费试用逻辑
+            if (estimatedMinutes <= 10) {
+                document.getElementById('totalCost').textContent = '免费试用';
+            } else {
+                const extraMinutes = estimatedMinutes - 10;
+                document.getElementById('totalCost').textContent = `¥${(extraMinutes * pricePerMinute).toFixed(1)}`;
+            }
+        }
+
+        // 移除文件
+        function removeFile() {
+            uploadedFile = null;
+            document.getElementById('processingList').style.display = 'none';
+            document.getElementById('startProcessBtn').disabled = true;
+            document.getElementById('estimatedDuration').textContent = '--';
+            document.getElementById('estimatedCost').textContent = '--';
+            document.getElementById('totalCost').textContent = '免费试用';
+            document.getElementById('fileInput').value = '';
+        }
+
+        // 开始处理
+        document.getElementById('startProcessBtn').addEventListener('click', function() {
+            if (!uploadedFile || isProcessing) return;
+            
+            isProcessing = true;
+            this.disabled = true;
+            this.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>正在${capabilityConfigs[selectedCapability].name}...`;
+            
+            // 模拟处理过程
+            simulateProcessing();
+        });
+
+        // 模拟处理过程
+        function simulateProcessing() {
+            const videoItem = document.getElementById('videoItem');
+            const statusElement = videoItem.querySelector('.text-blue-400');
+            const capabilityName = capabilityConfigs[selectedCapability].name;
+            
+            let progress = 0;
+            const progressElement = document.createElement('div');
+            progressElement.className = 'mt-2';
+            progressElement.innerHTML = `
+                <div class="w-full bg-slate-600 rounded-full h-2">
+                    <div class="progress-bar h-2 rounded-full" style="width: 0%"></div>
+                </div>
+                <div class="text-xs text-blue-400 mt-1">${capabilityName}中... 0%</div>
+            `;
+            
+            statusElement.parentElement.appendChild(progressElement);
+            statusElement.textContent = `正在${capabilityName}...`;
+            
+            const progressBar = progressElement.querySelector('.progress-bar');
+            const progressText = progressElement.querySelector('.text-xs');
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    // 处理完成
+                    statusElement.textContent = `${capabilityName}完成！`;
+                    statusElement.className = 'text-sm text-green-400';
+                    progressText.innerHTML = `
+                        <i class="fas fa-check mr-1"></i>${capabilityName}完成 
+                        <button class="ml-4 bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs">
+                            <i class="fas fa-download mr-1"></i>下载
+                        </button>
+                    `;
+                    
+                    // 重置按钮
+                    const startBtn = document.getElementById('startProcessBtn');
+                    startBtn.disabled = false;
+                    startBtn.innerHTML = '<i class="fas fa-play mr-2"></i>开始处理';
+                    isProcessing = false;
+                }
+                
+                progressBar.style.width = progress + '%';
+                if (progress < 100) {
+                    progressText.textContent = `${capabilityName}中... ${Math.floor(progress)}%`;
+                }
+            }, 300);
+        }
+
+        // 处理来自父页面的导航参数
+        window.handleNavigation = function(params) {
+            if (params.activeFunction) {
+                // 如果指定了功能，切换到对应的能力
+                const capability = params.activeFunction;
+                if (capabilityConfigs[capability]) {
+                    selectCapability(capability);
+                }
+            }
+        };
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 默认选择智能擦除
+            selectCapability('eraser');
+        });
+    </script>
+</body>
+</html> 

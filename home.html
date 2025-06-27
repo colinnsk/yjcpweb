@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一键出片 - 视频AI处理平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .feature-card {
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .mvp-badge {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .capability-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 英雄区域 -->
+    <section class="min-h-screen flex items-center justify-center px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <!-- MVP标志 -->
+            <div class="mb-8">
+                <span class="mvp-badge text-lg px-6 py-3">MVP版本</span>
+            </div>
+            
+            <!-- 主标题 -->
+            <h1 class="text-6xl md:text-8xl font-bold text-white mb-6 leading-tight">
+                一键<span class="gradient-text">出片</span>
+            </h1>
+            
+            <!-- 副标题 -->
+            <p class="text-xl md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">
+                AI驱动的视频处理平台
+            </p>
+            <p class="text-lg text-gray-400 mb-12 max-w-2xl mx-auto">
+                多种视频原子能力，简单上传，智能处理，快速获得专业级视频效果
+            </p>
+            
+            <!-- CTA按钮 -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                <button onclick="parentNavigate('workspace')" 
+                        class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg px-8 py-4 rounded-xl font-semibold transform hover:scale-105 transition-all duration-300">
+                    <i class="fas fa-magic mr-3"></i>立即开始处理
+                </button>
+                <button onclick="parentNavigate('pricing')" 
+                        class="bg-slate-800 hover:bg-slate-700 text-white text-lg px-8 py-4 rounded-xl font-semibold border border-slate-600 transform hover:scale-105 transition-all duration-300">
+                    <i class="fas fa-credit-card mr-3"></i>查看定价
+                </button>
+            </div>
+            
+            <!-- 核心优势 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-bolt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">快速处理</h3>
+                    <p class="text-gray-400">AI算法优化，平均处理时间仅需原视频时长的20%</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-brain text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">智能识别</h3>
+                    <p class="text-gray-400">深度学习技术，自动识别处理对象，无需手动标记</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">安全可靠</h3>
+                    <p class="text-gray-400">端到端加密，处理完成后自动删除，保护隐私安全</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 视频原子能力展示 -->
+    <section class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                    🎬 视频原子能力矩阵
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    多种专业级视频处理能力，满足不同场景需求，每种能力都经过AI优化
+                </p>
+            </div>
+            
+            <!-- 基础处理能力 -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-white mb-8 text-center">
+                    <span class="text-blue-400">基础处理</span> • 核心功能
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="feature-card bg-gradient-to-br from-slate-800/80 to-slate-900/80 p-6 rounded-2xl border border-slate-700 cursor-pointer"
+                         onclick="navigateToCapability('eraser')">
+                        <div class="capability-icon bg-gradient-to-r from-blue-500 to-blue-600 mx-auto">
+                            <i class="fas fa-eraser text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 text-center">智能擦除</h4>
+                        <p class="text-gray-300 text-sm mb-4 text-center">AI自动识别并去除视频中的字幕、水印、Logo等元素</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-400 font-semibold">¥2/分钟起</span>
+                            <span class="bg-green-600 text-white text-xs px-2 py-1 rounded">热门</span>
+                        </div>
+                    </div>
+
+                    <div class="feature-card bg-gradient-to-br from-slate-800/80 to-slate-900/80 p-6 rounded-2xl border border-slate-700 cursor-pointer"
+                         onclick="navigateToCapability('trim')">
+                        <div class="capability-icon bg-gradient-to-r from-green-500 to-green-600 mx-auto">
+                            <i class="fas fa-cut text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 text-center">视频剪辑</h4>
+                        <p class="text-gray-300 text-sm mb-4 text-center">精确裁剪、分割、合并，快速制作精彩集锦</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-400 font-semibold">¥1.5/分钟起</span>
+                            <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded">推荐</span>
+                        </div>
+                    </div>
+
+                    <div class="feature-card bg-gradient-to-br from-slate-800/80 to-slate-900/80 p-6 rounded-2xl border border-slate-700 cursor-pointer"
+                         onclick="navigateToCapability('compress')">
+                        <div class="capability-icon bg-gradient-to-r from-purple-500 to-purple-600 mx-auto">
+                            <i class="fas fa-compress-alt text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 text-center">格式转换</h4>
+                        <p class="text-gray-300 text-sm mb-4 text-center">智能压缩，多格式转换，保质减存储</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-400 font-semibold">¥1/分钟起</span>
+                            <span class="bg-orange-600 text-white text-xs px-2 py-1 rounded">经济</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 视觉增强能力 -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-white mb-8 text-center">
+                    <span class="text-pink-400">视觉增强</span> • 专业美化
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="feature-card bg-gradient-to-br from-slate-800/80 to-slate-900/80 p-6 rounded-2xl border border-slate-700 cursor-pointer"
+                         onclick="navigateToCapability('filter')">
+                        <div class="capability-icon bg-gradient-to-r from-pink-500 to-pink-600 mx-auto">
+                            <i class="fas fa-palette text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 text-center">滤镜特效</h4>
+                        <p class="text-gray-300 text-sm mb-4 text-center">丰富滤镜库，一键美化视频画面效果</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-400 font-semibold">¥2.5/分钟起</span>
+                            <span class="bg-pink-600 text-white text-xs px-2 py-1 rounded">创意</span>
+                        </div>
+                    </div>
+
+                    <div class="feature-card bg-gradient-to-br from-slate-800/80 to-slate-900/80 p-6 rounded-2xl border border-slate-700 cursor-pointer"
+                         onclick="navigateToCapability('enhance')">
+                        <div class="capability-icon bg-gradient-to-r from-yellow-500 to-yellow-600 mx-auto">
+                            <i class="fas fa-magic text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 text-center">画质增强</h4>
+                        <p class="text-gray-300 text-sm mb-4 text-center">AI去噪锐化，超分辨率，老视频焕新</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-400 font-semibold">¥3/分钟起</span>
+                            <span class="bg-yellow-600 text-white text-xs px-2 py-1 rounded">高级</span>
+                        </div>
+                    </div>
+
+                    <div class="feature-card bg-gradient-to-br from-slate-800/80 to-slate-900/80 p-6 rounded-2xl border border-slate-700 cursor-pointer"
+                         onclick="navigateToCapability('background')">
+                        <div class="capability-icon bg-gradient-to-r from-cyan-500 to-cyan-600 mx-auto">
+                            <i class="fas fa-image text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 text-center">背景处理</h4>
+                        <p class="text-gray-300 text-sm mb-4 text-center">智能抠图，背景替换，专业级效果</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-400 font-semibold">¥4/分钟起</span>
+                            <span class="bg-cyan-600 text-white text-xs px-2 py-1 rounded">专业</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内容处理能力 -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-white mb-8 text-center">
+                    <span class="text-indigo-400">内容处理</span> • 智能辅助
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="feature-card bg-gradient-to-br from-slate-800/80 to-slate-900/80 p-6 rounded-2xl border border-slate-700 cursor-pointer"
+                         onclick="navigateToCapability('subtitle')">
+                        <div class="capability-icon bg-gradient-to-r from-indigo-500 to-indigo-600 mx-auto">
+                            <i class="fas fa-closed-captioning text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 text-center">字幕处理</h4>
+                        <p class="text-gray-300 text-sm mb-4 text-center">自动提取字幕，多语言识别，添加定制字幕</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-400 font-semibold">¥1.5/分钟起</span>
+                            <span class="bg-indigo-600 text-white text-xs px-2 py-1 rounded">实用</span>
+                        </div>
+                    </div>
+
+                    <div class="feature-card bg-gradient-to-br from-slate-800/80 to-slate-900/80 p-6 rounded-2xl border border-slate-700 cursor-pointer"
+                         onclick="navigateToCapability('watermark')">
+                        <div class="capability-icon bg-gradient-to-r from-orange-500 to-orange-600 mx-auto">
+                            <i class="fas fa-copyright text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 text-center">水印管理</h4>
+                        <p class="text-gray-300 text-sm mb-4 text-center">添加个性化水印，保护原创内容版权</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-400 font-semibold">¥1/分钟起</span>
+                            <span class="bg-orange-600 text-white text-xs px-2 py-1 rounded">保护</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 能力对比表 -->
+            <div class="bg-gradient-to-br from-slate-800/80 to-slate-900/80 rounded-2xl p-8 border border-slate-700">
+                <h3 class="text-2xl font-bold text-white mb-6 text-center">💎 能力对比一览</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-600">
+                                <th class="text-left py-3 px-4 text-gray-300">处理能力</th>
+                                <th class="text-center py-3 px-4 text-gray-300">技术难度</th>
+                                <th class="text-center py-3 px-4 text-gray-300">处理速度</th>
+                                <th class="text-center py-3 px-4 text-gray-300">应用场景</th>
+                                <th class="text-center py-3 px-4 text-gray-300">价格区间</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-300">
+                            <tr class="border-b border-slate-700">
+                                <td class="py-3 px-4 font-semibold text-blue-400">智能擦除</td>
+                                <td class="py-3 px-4 text-center">⭐⭐⭐⭐</td>
+                                <td class="py-3 px-4 text-center">快</td>
+                                <td class="py-3 px-4 text-center">去水印/字幕</td>
+                                <td class="py-3 px-4 text-center">¥2-3/分钟</td>
+                            </tr>
+                            <tr class="border-b border-slate-700">
+                                <td class="py-3 px-4 font-semibold text-green-400">视频剪辑</td>
+                                <td class="py-3 px-4 text-center">⭐⭐</td>
+                                <td class="py-3 px-4 text-center">很快</td>
+                                <td class="py-3 px-4 text-center">剪辑/合并</td>
+                                <td class="py-3 px-4 text-center">¥1.5-2/分钟</td>
+                            </tr>
+                            <tr class="border-b border-slate-700">
+                                <td class="py-3 px-4 font-semibold text-purple-400">格式转换</td>
+                                <td class="py-3 px-4 text-center">⭐</td>
+                                <td class="py-3 px-4 text-center">很快</td>
+                                <td class="py-3 px-4 text-center">压缩/转换</td>
+                                <td class="py-3 px-4 text-center">¥1-1.5/分钟</td>
+                            </tr>
+                            <tr class="border-b border-slate-700">
+                                <td class="py-3 px-4 font-semibold text-pink-400">滤镜特效</td>
+                                <td class="py-3 px-4 text-center">⭐⭐⭐</td>
+                                <td class="py-3 px-4 text-center">中等</td>
+                                <td class="py-3 px-4 text-center">美化/创意</td>
+                                <td class="py-3 px-4 text-center">¥2.5-3.5/分钟</td>
+                            </tr>
+                            <tr class="border-b border-slate-700">
+                                <td class="py-3 px-4 font-semibold text-yellow-400">画质增强</td>
+                                <td class="py-3 px-4 text-center">⭐⭐⭐⭐⭐</td>
+                                <td class="py-3 px-4 text-center">慢</td>
+                                <td class="py-3 px-4 text-center">修复/增强</td>
+                                <td class="py-3 px-4 text-center">¥3-5/分钟</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 font-semibold text-cyan-400">背景处理</td>
+                                <td class="py-3 px-4 text-center">⭐⭐⭐⭐⭐</td>
+                                <td class="py-3 px-4 text-center">慢</td>
+                                <td class="py-3 px-4 text-center">抠图/合成</td>
+                                <td class="py-3 px-4 text-center">¥4-6/分钟</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MVP优势说明 -->
+    <section class="py-20 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 rounded-2xl p-8">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-white mb-4">
+                        <span class="mvp-badge mr-3">MVP版本</span>为什么选择我们？
+                    </h2>
+                    <p class="text-gray-300">专注核心功能，提供最佳用户体验</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-4">
+                            <i class="fas fa-rocket text-blue-400 mr-3"></i>快速上手
+                        </h3>
+                        <ul class="text-gray-300 space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>3步完成处理流程</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>直观的能力选择界面</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>AI自动参数配置</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>1分钟内完成学习</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-4">
+                            <i class="fas fa-dollar-sign text-green-400 mr-3"></i>透明定价
+                        </h3>
+                        <ul class="text-gray-300 space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>10分钟免费试用</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>按分钟计费，用多少付多少</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>实时费用预估</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>无隐藏收费</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-8">
+                    <button onclick="parentNavigate('workspace')" 
+                            class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg px-8 py-4 rounded-xl font-semibold transform hover:scale-105 transition-all duration-300">
+                        <i class="fas fa-play mr-3"></i>立即体验免费试用
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="py-12 px-4 border-t border-slate-800">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="text-gray-400">
+                <p class="mb-4">© 2024 一键出片 MVP版本 - 专注核心功能的视频AI处理平台</p>
+                <p class="text-sm">本产品为MVP验证版本，专注提供最核心的视频处理能力</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 导航到特定能力
+        function navigateToCapability(capability) {
+            if (window.parentNavigate) {
+                window.parentNavigate('workspace', { activeFunction: capability });
+            }
+        }
+
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加页面加载动画
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                document.body.style.transition = 'all 0.6s ease';
+                document.body.style.opacity = '1';
+                document.body.style.transform = 'translateY(0)';
+            }, 100);
+
+            // 为功能卡片添加交互效果
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.borderColor = '#3b82f6';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.borderColor = '#475569';
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一键出片 - MVP版本</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .browser-frame {
+            background: #202020;
+            border-radius: 12px;
+            padding: 8px;
+            margin: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+        .browser-header {
+            background: #2d2d2d;
+            height: 40px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+        }
+        .browser-controls {
+            display: flex;
+            gap: 8px;
+        }
+        .control-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .close { background: #ff5f57; }
+        .minimize { background: #ffbd2e; }
+        .maximize { background: #28ca42; }
+        .address-bar {
+            background: #3a3a3a;
+            margin-left: 20px;
+            flex: 1;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            color: #999;
+            font-size: 13px;
+        }
+        .iframe-container {
+            width: 100%;
+            height: calc(100vh - 200px);
+            border: none;
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+        .prototype-nav {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .nav-button {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 8px;
+        }
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+        }
+        .nav-button.active {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        .mvp-badge {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- MVP版本导航控制器 -->
+    <div class="prototype-nav">
+        <h1 class="text-3xl font-bold text-white mb-2 text-center">
+            <i class="fas fa-video mr-3"></i>一键出片
+            <span class="mvp-badge">MVP</span>
+        </h1>
+        <p class="text-center text-gray-300 mb-6">专注核心功能的轻量级版本</p>
+        <div class="text-center">
+            <button class="nav-button active" onclick="loadPage('home')">
+                <i class="fas fa-home mr-2"></i>产品首页
+            </button>
+            <button class="nav-button" onclick="loadPage('workspace')">
+                <i class="fas fa-magic mr-2"></i>视频处理
+            </button>
+            <button class="nav-button" onclick="loadPage('pricing')">
+                <i class="fas fa-credit-card mr-2"></i>简单定价
+            </button>
+        </div>
+        <div class="text-center mt-4">
+            <span class="text-sm text-gray-400">MVP版本特性：核心功能 • 快速上手 • 简化流程</span>
+        </div>
+    </div>
+
+    <!-- 浏览器框架 -->
+    <div class="browser-frame">
+        <div class="browser-header">
+            <div class="browser-controls">
+                <div class="control-btn close"></div>
+                <div class="control-btn minimize"></div>
+                <div class="control-btn maximize"></div>
+            </div>
+            <div class="address-bar">
+                <i class="fas fa-lock mr-2 text-green-400"></i>
+                https://mvp.yijianchu.com
+            </div>
+        </div>
+        <iframe id="main-frame" src="home.html" class="iframe-container"></iframe>
+    </div>
+
+    <script>
+        function loadPage(page, params = {}) {
+            // 更新活动按钮
+            document.querySelectorAll('.nav-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // 如果是通过事件触发的，更新按钮状态
+            if (event && event.target) {
+                event.target.closest('.nav-button').classList.add('active');
+            } else {
+                // 如果是程序触发的，找到对应按钮并激活
+                const targetBtn = document.querySelector(`[onclick="loadPage('${page}')"]`);
+                if (targetBtn) {
+                    targetBtn.classList.add('active');
+                }
+            }
+            
+            // 加载页面
+            const iframe = document.getElementById('main-frame');
+            iframe.src = page + '.html';
+            
+            // 延迟执行参数传递，确保页面加载完成
+            if (Object.keys(params).length > 0) {
+                setTimeout(() => {
+                    try {
+                        if (iframe.contentWindow && iframe.contentWindow.handleNavigation) {
+                            iframe.contentWindow.handleNavigation(params);
+                        }
+                    } catch (e) {
+                        console.log('参数传递失败:', e);
+                    }
+                }, 500);
+            }
+        }
+
+        // 全局页面跳转函数，供iframe页面调用
+        window.navigateTo = function(page, params = {}) {
+            loadPage(page, params);
+        };
+
+        // 监听iframe内容加载完成
+        document.getElementById('main-frame').addEventListener('load', function() {
+            const iframe = this;
+            try {
+                // 注入全局导航函数到iframe
+                if (iframe.contentWindow) {
+                    iframe.contentWindow.parentNavigate = window.navigateTo;
+                }
+            } catch (e) {
+                console.log('导航函数注入失败 (跨域限制)');
+            }
+        });
+
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 默认激活首页按钮
+            const homeBtn = document.querySelector('[onclick="loadPage(\'home\')"]');
+            if (homeBtn) {
+                homeBtn.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开发者平台 - 一键出片</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .api-card {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border: 1px solid #475569;
+            transition: all 0.3s ease;
+        }
+        .api-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .code-block {
+            background: #1e293b;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+        .chart-container {
+            background: linear-gradient(135deg, #1e293b 0%, #374151 100%);
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <nav class="bg-slate-900/80 backdrop-blur-sm border-b border-slate-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <div class="text-xl font-bold gradient-text">
+                        <i class="fas fa-code mr-2"></i>开发者中心
+                    </div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="text-white hover:text-blue-400 px-3 py-2 text-sm font-medium border-b-2 border-blue-500">概览</a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400 px-3 py-2 text-sm font-medium">API文档</a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400 px-3 py-2 text-sm font-medium">插件市场</a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400 px-3 py-2 text-sm font-medium">账单中心</a>
+                        <a href="#" class="text-gray-300 hover:text-blue-400 px-3 py-2 text-sm font-medium">技术支持</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-yellow-400 font-semibold">
+                        <i class="fas fa-coins mr-1"></i>API额度: 8,542次
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-white text-sm"></i>
+                        </div>
+                        <span class="text-white font-medium">开发者</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- 概览数据卡片 -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-blue-600/20 border border-blue-500/30 rounded-xl p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-blue-400 text-sm font-medium">今日调用</p>
+                        <p class="text-3xl font-bold text-white">12,456</p>
+                        <p class="text-xs text-gray-300 mt-1">
+                            <i class="fas fa-arrow-up text-green-400 mr-1"></i>+8.2%
+                        </p>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-chart-line text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-green-600/20 border border-green-500/30 rounded-xl p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-green-400 text-sm font-medium">成功率</p>
+                        <p class="text-3xl font-bold text-white">99.8%</p>
+                        <p class="text-xs text-gray-300 mt-1">
+                            <i class="fas fa-arrow-up text-green-400 mr-1"></i>+0.1%
+                        </p>
+                    </div>
+                    <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-check-circle text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-purple-600/20 border border-purple-500/30 rounded-xl p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-purple-400 text-sm font-medium">响应时间</p>
+                        <p class="text-3xl font-bold text-white">1.2s</p>
+                        <p class="text-xs text-gray-300 mt-1">
+                            <i class="fas fa-arrow-down text-green-400 mr-1"></i>-0.3s
+                        </p>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-clock text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-yellow-600/20 border border-yellow-500/30 rounded-xl p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-yellow-400 text-sm font-medium">消费金额</p>
+                        <p class="text-3xl font-bold text-white">¥456.78</p>
+                        <p class="text-xs text-gray-300 mt-1">本月累计</p>
+                    </div>
+                    <div class="w-12 h-12 bg-yellow-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-wallet text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- 左侧：API管理 -->
+            <div class="lg:col-span-2">
+                <!-- API调用量趋势图 -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-8">
+                    <h3 class="text-xl font-bold text-white mb-6">API调用量趋势</h3>
+                    <div class="bg-gradient-to-br from-slate-700 to-slate-600 rounded-lg p-6 h-64 flex items-center justify-center">
+                        <div class="text-center">
+                            <i class="fas fa-chart-area text-4xl text-blue-400 mb-4"></i>
+                            <p class="text-gray-300">📈 这里展示交互式图表</p>
+                            <p class="text-sm text-gray-400 mt-2">显示最近30天的API调用量变化趋势</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API密钥管理 -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-white">API密钥管理</h3>
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
+                            <i class="fas fa-plus mr-2"></i>生成新密钥
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-slate-700/50 rounded-lg p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <div>
+                                    <h4 class="font-semibold text-white">生产环境密钥</h4>
+                                    <p class="text-sm text-gray-400">创建于 2024-03-15</p>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-green-600 text-white text-xs px-2 py-1 rounded-full">活跃</span>
+                                    <button class="text-gray-400 hover:text-white">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                    <button class="text-red-400 hover:text-red-300">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="bg-slate-600 rounded p-3 font-mono text-sm text-gray-300">
+                                ak-prod-xxxxxxxxxxxxxxxxxxxxxxxx
+                            </div>
+                            <div class="mt-3 text-xs text-gray-400">
+                                最后使用: 2分钟前 • 权限: 全部功能 • 调用限制: 10000次/天
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-700/50 rounded-lg p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <div>
+                                    <h4 class="font-semibold text-white">测试环境密钥</h4>
+                                    <p class="text-sm text-gray-400">创建于 2024-03-10</p>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">测试</span>
+                                    <button class="text-gray-400 hover:text-white">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                    <button class="text-red-400 hover:text-red-300">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="bg-slate-600 rounded p-3 font-mono text-sm text-gray-300">
+                                ak-test-yyyyyyyyyyyyyyyyyyyyyyyy
+                            </div>
+                            <div class="mt-3 text-xs text-gray-400">
+                                最后使用: 1小时前 • 权限: 基础功能 • 调用限制: 1000次/天
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API文档快速入门 -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <h3 class="text-xl font-bold text-white mb-6">快速开始</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold text-white mb-3">1. 视频擦除API示例</h4>
+                            <div class="bg-slate-900 border border-slate-600 rounded-lg p-4">
+                                <pre class="text-sm text-gray-300 overflow-x-auto"><code>curl -X POST "https://api.yijianchu.com/v1/video/remove" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "video_url": "https://example.com/video.mp4",
+    "remove_type": "subtitle",
+    "quality_level": "high",
+    "callback_url": "https://your-app.com/webhook"
+  }'</code></pre>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="font-semibold text-white mb-3">2. 响应示例</h4>
+                            <div class="bg-slate-900 border border-slate-600 rounded-lg p-4">
+                                <pre class="text-sm text-gray-300 overflow-x-auto"><code>{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "task_id": "task_12345",
+    "status": "processing",
+    "estimated_time": 180,
+    "cost_estimate": "120 beans"
+  }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="flex space-x-4">
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg">
+                                <i class="fas fa-book mr-2"></i>查看完整文档
+                            </button>
+                            <button class="border border-gray-600 text-gray-300 hover:text-white hover:border-white px-6 py-3 rounded-lg">
+                                <i class="fas fa-download mr-2"></i>下载SDK
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：快速操作和资源 -->
+            <div class="lg:col-span-1">
+                <!-- 快速操作 -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-8">
+                    <h3 class="text-lg font-bold text-white mb-6">快速操作</h3>
+                    
+                    <div class="space-y-4">
+                        <button class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-lg text-left hover:from-blue-700 hover:to-purple-700">
+                            <div class="flex items-center">
+                                <i class="fas fa-key text-xl mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">生成新API密钥</h4>
+                                    <p class="text-sm opacity-80">创建新的API访问密钥</p>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button class="w-full bg-gradient-to-r from-green-600 to-blue-600 text-white p-4 rounded-lg text-left hover:from-green-700 hover:to-blue-700">
+                            <div class="flex items-center">
+                                <i class="fas fa-mobile-alt text-xl mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">创建新应用</h4>
+                                    <p class="text-sm opacity-80">注册新的应用程序</p>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-lg text-left hover:from-purple-700 hover:to-pink-700">
+                            <div class="flex items-center">
+                                <i class="fas fa-puzzle-piece text-xl mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">发布新插件</h4>
+                                    <p class="text-sm opacity-80">上传插件到市场</p>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button class="w-full bg-gradient-to-r from-yellow-600 to-orange-600 text-white p-4 rounded-lg text-left hover:from-yellow-700 hover:to-orange-700">
+                            <div class="flex items-center">
+                                <i class="fas fa-chart-bar text-xl mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">查看详细报告</h4>
+                                    <p class="text-sm opacity-80">分析使用数据和性能</p>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 支持的API功能 -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-8">
+                    <h3 class="text-lg font-bold text-white mb-6">核心API功能</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-slate-700 hover:bg-slate-600 rounded-lg p-4 transition-colors">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-eraser text-blue-400 text-lg mr-3"></i>
+                                <h4 class="font-semibold text-white">视频擦除API</h4>
+                            </div>
+                            <p class="text-sm text-gray-300 mb-2">智能擦除字幕、水印、Logo</p>
+                            <div class="text-xs text-blue-400">30-400黄豆/分钟</div>
+                        </div>
+
+                        <div class="bg-slate-700 hover:bg-slate-600 rounded-lg p-4 transition-colors">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-language text-green-400 text-lg mr-3"></i>
+                                <h4 class="font-semibold text-white">翻译API</h4>
+                            </div>
+                            <p class="text-sm text-gray-300 mb-2">35种语言视频翻译</p>
+                            <div class="text-xs text-green-400">150-550黄豆/分钟</div>
+                        </div>
+
+                        <div class="bg-slate-700 hover:bg-slate-600 rounded-lg p-4 transition-colors">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-user-robot text-purple-400 text-lg mr-3"></i>
+                                <h4 class="font-semibold text-white">数智人API</h4>
+                            </div>
+                            <p class="text-sm text-gray-300 mb-2">生成虚拟数字人物</p>
+                            <div class="text-xs text-purple-400">200-800黄豆/分钟</div>
+                        </div>
+
+                        <div class="bg-slate-700 hover:bg-slate-600 rounded-lg p-4 transition-colors">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-magic text-yellow-400 text-lg mr-3"></i>
+                                <h4 class="font-semibold text-white">AI分析API</h4>
+                            </div>
+                            <p class="text-sm text-gray-300 mb-2">智能视频分析推荐</p>
+                            <div class="text-xs text-yellow-400">免费使用</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 开发者资源 -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <h3 class="text-lg font-bold text-white mb-6">开发者资源</h3>
+                    
+                    <div class="space-y-3">
+                        <a href="#" class="flex items-center text-gray-300 hover:text-blue-400 p-2 rounded hover:bg-slate-700/50">
+                            <i class="fas fa-book mr-3 text-blue-400"></i>
+                            <span>API文档</span>
+                        </a>
+                        <a href="#" class="flex items-center text-gray-300 hover:text-blue-400 p-2 rounded hover:bg-slate-700/50">
+                            <i class="fas fa-code mr-3 text-green-400"></i>
+                            <span>SDK下载</span>
+                        </a>
+                        <a href="#" class="flex items-center text-gray-300 hover:text-blue-400 p-2 rounded hover:bg-slate-700/50">
+                            <i class="fas fa-comments mr-3 text-purple-400"></i>
+                            <span>开发者论坛</span>
+                        </a>
+                        <a href="#" class="flex items-center text-gray-300 hover:text-blue-400 p-2 rounded hover:bg-slate-700/50">
+                            <i class="fas fa-life-ring mr-3 text-yellow-400"></i>
+                            <span>技术支持</span>
+                        </a>
+                        <a href="#" class="flex items-center text-gray-300 hover:text-blue-400 p-2 rounded hover:bg-slate-700/50">
+                            <i class="fas fa-graduation-cap mr-3 text-red-400"></i>
+                            <span>最佳实践</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 页面导航函数
+        function navigateToWorkspace() {
+            if (window.parentNavigate) {
+                window.parentNavigate('workspace');
+            } else {
+                console.log('导航到工作台');
+            }
+        }
+
+        function navigateToPricing() {
+            if (window.parentNavigate) {
+                window.parentNavigate('pricing');
+            } else {
+                console.log('导航到定价页面');
+            }
+        }
+
+        function generateApiKey() {
+            const keyTypes = ['生产环境', '测试环境', '开发环境'];
+            const keyType = prompt('请选择API密钥类型:\n\n1 - 生产环境 (正式项目使用)\n2 - 测试环境 (测试和调试)\n3 - 开发环境 (本地开发)\n\n请输入数字1-3:');
+            
+            if (keyType && ['1', '2', '3'].includes(keyType)) {
+                const newKey = 'ak-' + (keyType === '1' ? 'prod' : keyType === '2' ? 'test' : 'dev') + '-' + 
+                              Math.random().toString(36).substr(2, 24);
+                alert(`✅ API密钥生成成功!\n\n🔑 密钥: ${newKey}\n📋 环境: ${keyTypes[parseInt(keyType)-1]}\n\n⚠️  请妥善保管您的API密钥，不要泄露给他人`);
+            }
+        }
+
+        function createNewApp() {
+            const appName = prompt('请输入应用名称:');
+            if (appName && appName.trim()) {
+                const appId = 'app_' + Math.random().toString(36).substr(2, 8);
+                alert(`🎉 应用创建成功!\n\n📱 应用名称: ${appName}\n🆔 应用ID: ${appId}\n🔗 回调地址: 请在应用设置中配置\n\n应用已添加到您的控制台`);
+            }
+        }
+
+        function publishPlugin() {
+            alert('插件发布功能：\n\n📦 支持的插件类型:\n• 视频处理插件\n• 自定义算法插件\n• 工作流插件\n• UI扩展插件\n\n📋 发布要求:\n• 提供插件说明文档\n• 通过安全检测\n• 功能测试通过\n\n点击确定开始发布流程');
+        }
+
+        function showDetailedReport() {
+            alert('详细报告功能：\n\n📊 可查看的数据:\n• API调用量统计\n• 成功率和错误分析\n• 响应时间监控\n• 费用消耗明细\n• 用户分布分析\n\n📅 支持导出格式:\n• Excel报表\n• PDF报告\n• JSON数据');
+        }
+
+        function copyApiKey(element) {
+            const keyText = element.closest('.bg-slate-700\\/50').querySelector('.font-mono').textContent;
+            navigator.clipboard.writeText(keyText).then(() => {
+                alert('API密钥已复制到剪贴板');
+            }).catch(() => {
+                alert('复制失败，请手动复制密钥');
+            });
+        }
+
+        function deleteApiKey(element) {
+            if (confirm('确定要删除这个API密钥吗？\n\n⚠️  删除后，使用此密钥的应用将无法正常工作')) {
+                element.closest('.bg-slate-700\\/50').remove();
+                alert('API密钥已删除');
+            }
+        }
+
+        function testApiFunction(functionType) {
+            const functionNames = {
+                'eraser': '视频擦除API',
+                'translator': '翻译API',
+                'avatar': '数智人API',
+                'ai-analysis': 'AI分析API'
+            };
+            
+            if (window.parentNavigate) {
+                window.parentNavigate('workspace', { 
+                    activeFunction: functionType,
+                    mode: 'api-test'
+                });
+            } else {
+                alert(`正在跳转到${functionNames[functionType]}测试界面...`);
+            }
+        }
+
+        // 处理来自父页面的导航参数
+        window.handleNavigation = function(params) {
+            if (params.action === 'generate-key') {
+                generateApiKey();
+            }
+            if (params.scrollTo) {
+                const element = document.getElementById(params.scrollTo);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        };
+
+        // 为按钮和链接添加点击事件
+        document.addEventListener('DOMContentLoaded', function() {
+            // 快速操作按钮
+            const quickActionBtns = document.querySelectorAll('.space-y-4 button');
+            quickActionBtns.forEach((btn, index) => {
+                switch(index) {
+                    case 0: // 生成新API密钥
+                        btn.addEventListener('click', generateApiKey);
+                        break;
+                    case 1: // 创建新应用
+                        btn.addEventListener('click', createNewApp);
+                        break;
+                    case 2: // 发布新插件
+                        btn.addEventListener('click', publishPlugin);
+                        break;
+                    case 3: // 查看详细报告
+                        btn.addEventListener('click', showDetailedReport);
+                        break;
+                }
+            });
+
+            // API功能卡片点击事件
+            const apiFunctionCards = document.querySelectorAll('.space-y-4 .bg-slate-700');
+            apiFunctionCards.forEach((card, index) => {
+                const functionTypes = ['eraser', 'translator', 'avatar', 'ai-analysis'];
+                card.addEventListener('click', () => {
+                    testApiFunction(functionTypes[index]);
+                });
+                card.style.cursor = 'pointer';
+            });
+
+            // 文档和SDK按钮
+            const docButtons = document.querySelectorAll('.flex.space-x-4 button');
+            docButtons.forEach((btn, index) => {
+                if (index === 0) { // 查看完整文档
+                    btn.addEventListener('click', () => {
+                        alert('📚 API文档功能:\n\n• 完整的API参考手册\n• 交互式API测试工具\n• 代码示例和教程\n• 最佳实践指南\n\n正在打开文档页面...');
+                    });
+                } else if (index === 1) { // 下载SDK
+                    btn.addEventListener('click', () => {
+                        alert('💾 SDK下载:\n\n🔧 支持的语言:\n• Python SDK\n• Node.js SDK\n• Java SDK\n• PHP SDK\n• Go SDK\n\n📦 包含功能:\n• 完整API封装\n• 错误处理\n• 重试机制\n• 示例代码');
+                    });
+                }
+            });
+
+            // 复制和删除按钮
+            const copyButtons = document.querySelectorAll('.fa-copy');
+            const deleteButtons = document.querySelectorAll('.fa-trash');
+            
+            copyButtons.forEach(btn => {
+                btn.closest('button').addEventListener('click', () => copyApiKey(btn));
+            });
+            
+            deleteButtons.forEach(btn => {
+                btn.closest('button').addEventListener('click', () => deleteApiKey(btn));
+            });
+
+            // 开发者资源链接
+            const resourceLinks = document.querySelectorAll('.space-y-3 a');
+            resourceLinks.forEach((link, index) => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const resources = [
+                        'API文档',
+                        'SDK下载', 
+                        '开发者论坛',
+                        '技术支持',
+                        '最佳实践'
+                    ];
+                    alert(`正在打开${resources[index]}页面...`);
+                });
+            });
+        });
+
+        // 模拟数据更新
+        function updateDeveloperStats() {
+            // 模拟更新API调用统计
+            const callCount = document.querySelector('.text-3xl.font-bold');
+            if (callCount && callCount.textContent.includes(',')) {
+                const currentCount = parseInt(callCount.textContent.replace(/,/g, ''));
+                const newCount = currentCount + Math.floor(Math.random() * 10);
+                callCount.textContent = newCount.toLocaleString();
+            }
+        }
+
+        // 页面加载完成后定期更新数据
+        setInterval(updateDeveloperStats, 10000); // 每10秒更新一次
+
+        // 添加实时时间更新
+        function updateLastApiCall() {
+            const timeElements = document.querySelectorAll('.text-xs.text-gray-400');
+            timeElements.forEach(element => {
+                if (element.textContent.includes('最后调用')) {
+                    element.textContent = '最后调用: 刚刚';
+                }
+            });
+        }
+
+        setInterval(updateLastApiCall, 60000); // 每分钟更新一次
+    </script>
+</body>
+</html> 
