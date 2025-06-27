@@ -8,7 +8,14 @@
     "dev": "nodemon backend-api.js",
     "test": "jest",
     "build": "webpack --mode production",
-    "serve": "http-server -p 8080 -c-1"
+    "build:dev": "webpack --mode development",
+    "build:simple": "webpack --config webpack.simple.config.js",
+    "serve": "http-server dist -p 8080 -c-1",
+    "serve:simple": "http-server . -p 8080 -c-1",
+    "webpack:dev": "webpack serve --mode development",
+    "clean": "rm -rf dist coverage",
+    "fix": "bash fix-build.sh",
+    "quick-start": "mkdir -p dist && cp *.html dist/ && npx http-server dist -p 8080"
   },
   "keywords": [
     "video",
@@ -31,7 +38,8 @@
     "compression": "^1.7.4",
     "express-rate-limit": "^7.1.5",
     "joi": "^17.11.0",
-    "moment": "^2.29.4"
+    "moment": "^2.29.4",
+    "core-js": "^3.35.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2",
@@ -39,6 +47,8 @@
     "supertest": "^6.3.3",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1",
+    "html-loader": "^4.2.0",
     "babel-loader": "^9.1.3",
     "@babel/core": "^7.23.6",
     "@babel/preset-env": "^7.23.6",
@@ -61,6 +71,7 @@
   },
   "homepage": "https://github.com/yijianchu/video-upload#readme",
   "files": [
+    "dist/",
     "*.js",
     "*.html",
     "*.css",
@@ -80,7 +91,9 @@
     "collectCoverageFrom": [
       "*.js",
       "!coverage/**",
-      "!node_modules/**"
+      "!node_modules/**",
+      "!webpack.config.js",
+      "!babel.config.js"
     ]
   }
 } 
