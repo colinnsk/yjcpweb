@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一键出片 - 视频AI处理平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="components/navbar-simplified.js"></script>
+</head>
+
+<body class="bg-slate-900 text-white min-h-screen">
+    <!-- 极简导航栏 -->
+    <div id="navbar-container"></div>
+
+    <!-- 英雄区域 - 极简版 -->
+    <section class="relative py-20 px-4 overflow-hidden">
+        <!-- 简化背景 -->
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20"></div>
+        
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <!-- 核心价值主张 -->
+            <div class="mb-8">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                    视频处理
+                    <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">一键搞定</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                    AI智能去水印、去字幕、声音克隆，让视频创作更简单
+                </p>
+            </div>
+
+            <!-- 社会证明 -->
+            <div class="flex justify-center items-center space-x-8 mb-12 text-sm text-gray-400">
+                <div class="flex items-center">
+                    <i class="fas fa-users mr-2 text-blue-400"></i>
+                    <span>15,000+ 创作者</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-video mr-2 text-green-400"></i>
+                    <span>800万+ 视频处理</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-star mr-2 text-yellow-400"></i>
+                    <span>4.9分 用户评价</span>
+                </div>
+            </div>
+
+            <!-- 单一CTA -->
+            <div class="space-y-4">
+                <a href="workspace.html" 
+                   class="inline-flex items-center bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-8 rounded-2xl text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    <i class="fas fa-magic mr-3"></i>
+                    立即开始处理视频
+                    <i class="fas fa-arrow-right ml-3"></i>
+                </a>
+                <div class="text-sm text-gray-400">
+                    免费试用1分钟 • 无需注册 • 即刻体验
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心功能 - 精简版 -->
+    <section class="py-16 px-4">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">三大核心能力</h2>
+                <p class="text-gray-400">专注最需要的视频处理功能</p>
+            </div>
+            
+            <!-- 3个核心功能卡片 -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- 智能去除 -->
+                <div class="group bg-slate-800/50 rounded-2xl p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 cursor-pointer"
+                     onclick="navigateToCapability('removeAll')">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-eraser text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">智能去除</h3>
+                        <p class="text-gray-400 mb-4">去水印、去字幕、去Logo<br/>AI精准识别，一键处理</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-400 font-semibold">¥2/分钟起</span>
+                            <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">最热门</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI创作 -->
+                <div class="group bg-slate-800/50 rounded-2xl p-6 border border-slate-700 hover:border-purple-500/50 transition-all duration-300 cursor-pointer"
+                     onclick="navigateToCapability('aiCreate')">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-robot text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">AI创作</h3>
+                        <p class="text-gray-400 mb-4">声音克隆、数智人生成<br/>前沿AI技术，创作无限</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-400 font-semibold">¥10/次起</span>
+                            <span class="bg-purple-500 text-white text-xs px-2 py-1 rounded-full">最新潮</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 内容提取 -->
+                <div class="group bg-slate-800/50 rounded-2xl p-6 border border-slate-700 hover:border-green-500/50 transition-all duration-300 cursor-pointer"
+                     onclick="navigateToCapability('extract')">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-file-text text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">内容提取</h3>
+                        <p class="text-gray-400 mb-4">文案提取、视频翻译<br/>多语言支持，精准转换</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-400 font-semibold">¥1.5/分钟起</span>
+                            <span class="bg-green-500 text-white text-xs px-2 py-1 rounded-full">最实用</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 用户评价 - 简化版 -->
+    <section class="py-16 px-4 bg-slate-800/30">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-8">用户怎么说</h2>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" 
+                             class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <div class="font-semibold">李导演</div>
+                            <div class="text-xs text-yellow-400">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">"去水印效果惊艳，节省大量后期时间"</p>
+                </div>
+
+                <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b668-2616b?w=40&h=40&fit=crop&crop=face" 
+                             class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <div class="font-semibold">王博主</div>
+                            <div class="text-xs text-yellow-400">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">"声音克隆太棒了，数智人视频制作神器"</p>
+                </div>
+
+                <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" 
+                             class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <div class="font-semibold">张创作者</div>
+                            <div class="text-xs text-yellow-400">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">"操作简单，效果专业，必备工具"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 简化底部 -->
+    <footer class="py-8 px-4 border-t border-slate-800">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="flex justify-center items-center space-x-6 mb-4 text-sm text-gray-400">
+                <a href="pricing.html" class="hover:text-white">定价</a>
+                <a href="developer.html" class="hover:text-white">API</a>
+                <a href="#" class="hover:text-white">帮助</a>
+                <a href="#" class="hover:text-white">隐私</a>
+            </div>
+            <div class="text-gray-500 text-sm">
+                © 2024 一键出片 • 让视频创作更简单
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 初始化简化导航
+        document.addEventListener('DOMContentLoaded', function() {
+            window.simplifiedNavbar.currentPage = 'home';
+            window.simplifiedNavbar.render();
+        });
+
+        // 功能导航
+        function navigateToCapability(type) {
+            const capabilities = {
+                'removeAll': 'workspace.html?capability=removeSubtitle',
+                'aiCreate': 'workspace.html?capability=voiceClone', 
+                'extract': 'workspace.html?capability=textExtract'
+            };
+            
+            window.location.href = capabilities[type] || 'workspace.html';
+        }
+
+        // 简化的滚动动画
+        window.addEventListener('scroll', function() {
+            const cards = document.querySelectorAll('.group');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    card.style.transform = 'translateY(0)';
+                    card.style.opacity = '1';
+                }
+            });
+        });
+    </script>
+
+    <style>
+        /* 简化的CSS */
+        .group {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+        }
+
+        /* 减少过度动画 */
+        * {
+            transition-duration: 0.2s !important;
+        }
+
+        /* 移动端优化 */
+        @media (max-width: 768px) {
+            .text-5xl { font-size: 2.5rem; }
+            .text-7xl { font-size: 3rem; }
+            
+            .grid.md\\:grid-cols-3 {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+    </style>
+</body>
+</html> 

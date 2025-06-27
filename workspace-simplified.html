@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频处理工作台 - 一键出片</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="components/navbar-simplified.js"></script>
+    <script src="js/video-processor.js"></script>
+    <script src="js/notification.js"></script>
+</head>
+
+<body class="bg-slate-900 text-white min-h-screen">
+    <!-- 极简导航栏 -->
+    <div id="navbar-container"></div>
+    
+    <!-- 工作台标题 -->
+    <div class="bg-slate-800/30 border-b border-slate-700">
+        <div class="max-w-5xl mx-auto px-4 py-4">
+            <h1 class="text-2xl font-bold text-white flex items-center">
+                <i class="fas fa-magic mr-3 text-blue-400"></i>
+                视频处理工作台
+                <span class="ml-4 text-sm text-green-400 font-normal">
+                    <i class="fas fa-gift mr-1"></i>免费试用1分钟
+                </span>
+            </h1>
+        </div>
+    </div>
+
+    <div class="max-w-5xl mx-auto px-4 py-8">
+        <!-- 2步流程提示 -->
+        <div class="bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 rounded-xl p-6 mb-8">
+            <div class="flex items-center justify-center space-x-8">
+                <div class="flex items-center text-blue-400">
+                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mr-3">1</div>
+                    <span class="font-semibold">选择功能并上传</span>
+                </div>
+                <i class="fas fa-arrow-right text-gray-400"></i>
+                <div class="flex items-center text-purple-400">
+                    <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold mr-3">2</div>
+                    <span class="font-semibold">AI处理并下载</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-8">
+            
+            <!-- 左侧：功能选择 + 上传 -->
+            <div class="space-y-6">
+                
+                <!-- 功能选择 -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <h2 class="text-xl font-bold text-white mb-6">
+                        <span class="text-blue-400">步骤 1:</span> 选择处理功能
+                    </h2>
+                    
+                    <!-- 3大类功能 -->
+                    <div class="space-y-4">
+                        <!-- 智能去除 -->
+                        <div class="function-group">
+                            <h3 class="text-sm font-semibold text-gray-400 mb-3">🎯 智能去除 (最热门)</h3>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="capability-card active" data-capability="removeSubtitle" data-price="2">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-text-slash text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-white text-sm">去除字幕</h4>
+                                            <p class="text-xs text-blue-400">¥2/分钟</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="capability-card" data-capability="removeWatermark" data-price="2.5">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-droplet-slash text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-white text-sm">去除水印</h4>
+                                            <p class="text-xs text-green-400">¥2.5/分钟</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI创作 -->
+                        <div class="function-group">
+                            <h3 class="text-sm font-semibold text-gray-400 mb-3">🤖 AI创作 (最新潮)</h3>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="capability-card" data-capability="voiceClone" data-price="10" data-unit="次">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-pink-600 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-microphone-alt text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-white text-sm">声音克隆</h4>
+                                            <p class="text-xs text-pink-400">¥10/次</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="capability-card" data-capability="digitalHuman" data-price="15" data-unit="次">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-cyan-600 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-user-astronaut text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-white text-sm">数智人生成</h4>
+                                            <p class="text-xs text-cyan-400">¥15/次</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 内容处理 -->
+                        <div class="function-group">
+                            <h3 class="text-sm font-semibold text-gray-400 mb-3">📝 内容处理 (最实用)</h3>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="capability-card" data-capability="textExtract" data-price="1.5">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-file-text text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-white text-sm">文案提取</h4>
+                                            <p class="text-xs text-indigo-400">¥1.5/分钟</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="capability-card" data-capability="translate" data-price="3">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-language text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-white text-sm">视频翻译</h4>
+                                            <p class="text-xs text-orange-400">¥3/分钟</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 当前选择显示 -->
+                    <div class="mt-6 bg-blue-600/20 border border-blue-500/30 rounded-lg p-4">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h4 class="font-semibold text-white text-sm" id="selectedCapability">已选择：去除字幕</h4>
+                                <p class="text-xs text-gray-300" id="selectedDescription">AI智能识别视频中的字幕文字</p>
+                            </div>
+                            <div class="text-blue-400 font-bold" id="selectedPrice">¥2/分钟</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 视频上传 -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <h2 class="text-xl font-bold text-white mb-4">上传视频文件</h2>
+                    
+                    <div class="drop-zone bg-slate-700/50 rounded-xl p-8 text-center border-2 border-dashed border-slate-600 hover:border-blue-500 transition-colors" 
+                         ondrop="handleDrop(event)" ondragover="handleDragOver(event)">
+                        <div class="mb-4">
+                            <i class="fas fa-cloud-upload-alt text-4xl text-blue-400 mb-3"></i>
+                            <h3 class="text-lg font-semibold text-white mb-2">拖拽或点击上传</h3>
+                            <p class="text-gray-400 text-sm mb-4">支持 MP4, AVI, MOV, MKV 格式</p>
+                            <input type="file" id="fileInput" accept="video/*,audio/*" style="display: none;" onchange="handleFileSelect(event)">
+                            <button onclick="document.getElementById('fileInput').click()" 
+                                    class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                                <i class="fas fa-folder-open mr-2"></i>选择文件
+                            </button>
+                        </div>
+                        <div class="text-xs text-gray-500">最大文件：500MB | 免费试用：1分钟</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：处理进度和结果 -->
+            <div class="space-y-6">
+                
+                <!-- 处理进度 -->
+                <div class="bg-slate-800 rounded-xl border border-slate-700" id="processingPanel" style="display: none;">
+                    <div class="p-6 border-b border-slate-700">
+                        <h3 class="text-xl font-bold text-white">
+                            <span class="text-purple-400">步骤 2:</span> AI正在处理
+                        </h3>
+                    </div>
+                    
+                    <div class="p-6" id="videoList">
+                        <!-- 动态添加的处理项目 -->
+                    </div>
+                </div>
+
+                <!-- 空状态提示 -->
+                <div class="bg-slate-800 rounded-xl p-8 border border-slate-700 text-center" id="emptyState">
+                    <div class="text-gray-400 mb-4">
+                        <i class="fas fa-upload text-4xl mb-4"></i>
+                        <h3 class="text-lg font-semibold mb-2">等待上传文件</h3>
+                        <p class="text-sm">选择功能后，上传视频开始处理</p>
+                    </div>
+                    
+                    <!-- 最近处理记录 -->
+                    <div class="mt-6 pt-6 border-t border-slate-700">
+                        <h4 class="text-white font-semibold mb-3">最近处理</h4>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-300">演示视频_去字幕.mp4</span>
+                                <span class="text-green-400">已完成</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-300">产品介绍_去水印.mp4</span>
+                                <span class="text-green-400">已完成</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 快速操作 -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <h3 class="text-lg font-bold text-white mb-4">快速操作</h3>
+                    <div class="space-y-3">
+                        <button onclick="showTasks()" class="w-full flex items-center justify-between p-3 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors">
+                            <div class="flex items-center">
+                                <i class="fas fa-tasks mr-3 text-blue-400"></i>
+                                <span class="text-white">查看所有任务</span>
+                            </div>
+                            <i class="fas fa-arrow-right text-gray-400"></i>
+                        </button>
+                        
+                        <button onclick="showPricing()" class="w-full flex items-center justify-between p-3 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors">
+                            <div class="flex items-center">
+                                <i class="fas fa-credit-card mr-3 text-green-400"></i>
+                                <span class="text-white">充值黄豆</span>
+                            </div>
+                            <i class="fas fa-arrow-right text-gray-400"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            window.simplifiedNavbar.currentPage = 'workspace';
+            window.simplifiedNavbar.render();
+            
+            // 初始化功能选择
+            initCapabilitySelection();
+        });
+
+        // 功能选择逻辑
+        function initCapabilitySelection() {
+            const cards = document.querySelectorAll('.capability-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // 移除其他活跃状态
+                    cards.forEach(c => c.classList.remove('active'));
+                    
+                    // 添加当前活跃状态
+                    this.classList.add('active');
+                    
+                    // 更新选择显示
+                    updateSelectedCapability(this);
+                });
+            });
+        }
+
+        function updateSelectedCapability(card) {
+            const capability = card.dataset.capability;
+            const price = card.dataset.price;
+            const unit = card.dataset.unit || '分钟';
+            
+            const titles = {
+                'removeSubtitle': '去除字幕',
+                'removeWatermark': '去除水印',
+                'voiceClone': '声音克隆',
+                'digitalHuman': '数智人生成',
+                'textExtract': '文案提取',
+                'translate': '视频翻译'
+            };
+            
+            const descriptions = {
+                'removeSubtitle': 'AI智能识别视频中的字幕文字',
+                'removeWatermark': '智能检测和去除各类水印',
+                'voiceClone': '通过音频样本克隆个性化声音',
+                'digitalHuman': '快速生成数智人视频内容',
+                'textExtract': '自动识别语音转换为文字',
+                'translate': '多语言语音识别与翻译'
+            };
+            
+            document.getElementById('selectedCapability').textContent = `已选择：${titles[capability]}`;
+            document.getElementById('selectedDescription').textContent = descriptions[capability];
+            document.getElementById('selectedPrice').textContent = `¥${price}/${unit}`;
+        }
+
+        // 文件处理
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            if (files.length > 0) {
+                processFile(files[0]);
+            }
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            const files = event.dataTransfer.files;
+            if (files.length > 0) {
+                processFile(files[0]);
+            }
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+        }
+
+        function processFile(file) {
+            // 隐藏空状态，显示处理面板
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('processingPanel').style.display = 'block';
+            
+            // 获取当前选择的功能
+            const activeCard = document.querySelector('.capability-card.active');
+            const capability = activeCard ? activeCard.dataset.capability : 'removeSubtitle';
+            
+            // 开始处理
+            if (window.videoProcessor) {
+                window.videoProcessor.processVideo(file, capability);
+            }
+        }
+
+        // 快速操作
+        function showTasks() {
+            window.location.href = 'tasks.html';
+        }
+
+        function showPricing() {
+            window.location.href = 'pricing.html';
+        }
+    </script>
+
+    <style>
+        /* 功能卡片样式 */
+        .capability-card {
+            @apply bg-slate-700 hover:bg-slate-600 rounded-lg p-3 cursor-pointer transition-all duration-200 border border-transparent;
+        }
+
+        .capability-card.active {
+            @apply bg-blue-600/20 border-blue-500/50 ring-2 ring-blue-500/30;
+        }
+
+        .capability-card:hover {
+            transform: translateY(-2px);
+        }
+
+        /* 拖拽区域样式 */
+        .drop-zone.dragover {
+            @apply border-blue-500 bg-blue-500/10;
+        }
+
+        /* 响应式优化 */
+        @media (max-width: 1024px) {
+            .grid.lg\\:grid-cols-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .grid.grid-cols-2 {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+        }
+
+        /* 简化动画 */
+        * {
+            transition-duration: 0.2s !important;
+        }
+    </style>
+</body>
+</html> 

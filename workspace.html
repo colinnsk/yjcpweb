@@ -58,27 +58,22 @@
     </style>
 </head>
 <body>
-    <!-- 顶部工具栏 -->
-    <header class="bg-slate-900/80 backdrop-blur-sm border-b border-slate-700">
+    <!-- 统一导航栏容器 -->
+    <div id="navbar-container"></div>
+    
+    <!-- 工作台标题栏 -->
+    <div class="bg-slate-800/50 border-b border-slate-700">
         <div class="max-w-7xl mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-6">
-                    <h1 class="text-2xl font-bold text-white">
-                        <i class="fas fa-magic mr-2 text-blue-400"></i>视频处理工作台
-                        <span class="mvp-badge ml-3">MVP</span>
-                    </h1>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <div class="text-green-400 font-semibold text-sm">
-                        <i class="fas fa-gift mr-1"></i>免费试用: 10分钟
-                    </div>
-                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-                        <i class="fas fa-user mr-2"></i>登录使用
-                    </button>
+                <h1 class="text-2xl font-bold text-white">
+                    <i class="fas fa-magic mr-2 text-blue-400"></i>视频处理工作台
+                </h1>
+                <div class="text-green-400 font-semibold text-sm">
+                    <i class="fas fa-gift mr-1"></i>免费试用: 1分钟
                 </div>
             </div>
         </div>
-    </header>
+    </div>
 
     <div class="max-w-7xl mx-auto px-4 py-6">
         <!-- MVP说明横幅 -->
@@ -100,82 +95,40 @@
                     
                     <!-- 基础处理能力 -->
                     <div class="mb-6">
-                        <h3 class="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wide">基础处理</h3>
+                        <h3 class="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wide">智能去除</h3>
                         <div class="space-y-2">
-                            <div class="capability-card bg-blue-600/20 border border-blue-500/50 rounded-lg p-3 active" data-capability="eraser">
+                            <div class="capability-card bg-blue-600/20 border border-blue-500/50 rounded-lg p-3 active" data-capability="removeSubtitle">
                                 <div class="flex items-center">
                                     <div class="capability-icon bg-gradient-to-r from-blue-500 to-blue-600">
-                                        <i class="fas fa-eraser text-white text-sm"></i>
+                                        <i class="fas fa-text-slash text-white text-sm"></i>
                                     </div>
                                     <div class="flex-1">
-                                        <h4 class="font-semibold text-white text-sm">智能擦除</h4>
-                                        <p class="text-xs text-gray-300">去除字幕、水印、Logo</p>
+                                        <h4 class="font-semibold text-white text-sm">去除字幕</h4>
+                                        <p class="text-xs text-gray-300">AI智能识别去除</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="trim">
+                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="removeWatermark">
                                 <div class="flex items-center">
                                     <div class="capability-icon bg-gradient-to-r from-green-500 to-green-600">
-                                        <i class="fas fa-cut text-white text-sm"></i>
+                                        <i class="fas fa-droplet-slash text-white text-sm"></i>
                                     </div>
                                     <div class="flex-1">
-                                        <h4 class="font-semibold text-white text-sm">视频剪辑</h4>
-                                        <p class="text-xs text-gray-300">裁剪、分割、合并</p>
+                                        <h4 class="font-semibold text-white text-sm">去除水印</h4>
+                                        <p class="text-xs text-gray-300">智能检测去除</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="compress">
+                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="removeLogo">
                                 <div class="flex items-center">
                                     <div class="capability-icon bg-gradient-to-r from-purple-500 to-purple-600">
-                                        <i class="fas fa-compress-alt text-white text-sm"></i>
+                                        <i class="fas fa-ban text-white text-sm"></i>
                                     </div>
                                     <div class="flex-1">
-                                        <h4 class="font-semibold text-white text-sm">格式转换</h4>
-                                        <p class="text-xs text-gray-300">压缩、格式转换</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 视觉增强 -->
-                    <div class="mb-6">
-                        <h3 class="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wide">视觉增强</h3>
-                        <div class="space-y-2">
-                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="filter">
-                                <div class="flex items-center">
-                                    <div class="capability-icon bg-gradient-to-r from-pink-500 to-pink-600">
-                                        <i class="fas fa-palette text-white text-sm"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h4 class="font-semibold text-white text-sm">滤镜特效</h4>
-                                        <p class="text-xs text-gray-300">美化、调色、特效</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="enhance">
-                                <div class="flex items-center">
-                                    <div class="capability-icon bg-gradient-to-r from-yellow-500 to-yellow-600">
-                                        <i class="fas fa-magic text-white text-sm"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h4 class="font-semibold text-white text-sm">画质增强</h4>
-                                        <p class="text-xs text-gray-300">去噪、锐化、超分</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="background">
-                                <div class="flex items-center">
-                                    <div class="capability-icon bg-gradient-to-r from-cyan-500 to-cyan-600">
-                                        <i class="fas fa-image text-white text-sm"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h4 class="font-semibold text-white text-sm">背景处理</h4>
-                                        <p class="text-xs text-gray-300">替换、模糊背景</p>
+                                        <h4 class="font-semibold text-white text-sm">去除Logo</h4>
+                                        <p class="text-xs text-gray-300">精准识别去除</p>
                                     </div>
                                 </div>
                             </div>
@@ -186,26 +139,56 @@
                     <div class="mb-6">
                         <h3 class="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wide">内容处理</h3>
                         <div class="space-y-2">
-                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="subtitle">
+                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="textExtract">
                                 <div class="flex items-center">
                                     <div class="capability-icon bg-gradient-to-r from-indigo-500 to-indigo-600">
-                                        <i class="fas fa-closed-captioning text-white text-sm"></i>
+                                        <i class="fas fa-file-text text-white text-sm"></i>
                                     </div>
                                     <div class="flex-1">
-                                        <h4 class="font-semibold text-white text-sm">字幕处理</h4>
-                                        <p class="text-xs text-gray-300">提取、添加字幕</p>
+                                        <h4 class="font-semibold text-white text-sm">视频文案提取</h4>
+                                        <p class="text-xs text-gray-300">语音转文字提取</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="watermark">
+                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="translate">
                                 <div class="flex items-center">
                                     <div class="capability-icon bg-gradient-to-r from-orange-500 to-orange-600">
-                                        <i class="fas fa-copyright text-white text-sm"></i>
+                                        <i class="fas fa-language text-white text-sm"></i>
                                     </div>
                                     <div class="flex-1">
-                                        <h4 class="font-semibold text-white text-sm">水印管理</h4>
-                                        <p class="text-xs text-gray-300">添加、定制水印</p>
+                                        <h4 class="font-semibold text-white text-sm">视频翻译</h4>
+                                        <p class="text-xs text-gray-300">多语言翻译字幕</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI声音处理 -->
+                    <div class="mb-6">
+                        <h3 class="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wide">AI创作</h3>
+                        <div class="space-y-2">
+                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="voiceClone">
+                                <div class="flex items-center">
+                                    <div class="capability-icon bg-gradient-to-r from-pink-500 to-pink-600">
+                                        <i class="fas fa-microphone-alt text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-white text-sm">声音克隆</h4>
+                                        <p class="text-xs text-gray-300">克隆个性化声音</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="capability-card bg-slate-700 hover:bg-slate-600 rounded-lg p-3" data-capability="digitalHuman">
+                                <div class="flex items-center">
+                                    <div class="capability-icon bg-gradient-to-r from-cyan-500 to-blue-600">
+                                        <i class="fas fa-user-astronaut text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-white text-sm">数智人生成</h4>
+                                        <p class="text-xs text-gray-300">快速创建数字人视频</p>
                                     </div>
                                 </div>
                             </div>
@@ -218,7 +201,7 @@
                             <i class="fas fa-check-circle text-blue-400 mr-2"></i>当前选择
                         </h4>
                         <div class="text-sm text-gray-300" id="selectedCapability">
-                            智能擦除 - 去除视频中的字幕、水印、Logo
+                            去除字幕 - AI智能识别视频中的字幕文字
                         </div>
                         <div class="text-xs text-blue-400 mt-2" id="selectedPrice">
                             起价: ¥2/分钟
@@ -241,13 +224,13 @@
                             <i class="fas fa-cloud-upload-alt text-6xl text-blue-400 mb-4"></i>
                             <h3 class="text-xl font-semibold text-white mb-2">拖拽视频文件到这里</h3>
                             <p class="text-gray-400 mb-4">或者点击选择文件</p>
-                            <input type="file" id="fileInput" accept="video/*" style="display: none;" onchange="handleFileSelect(event)">
+                            <input type="file" id="fileInput" accept="video/*,audio/*" style="display: none;" onchange="handleFileSelect(event)">
                             <button onclick="document.getElementById('fileInput').click()" 
                                     class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold">
                                 <i class="fas fa-folder-open mr-2"></i>选择视频文件
                             </button>
                         </div>
-                        <div class="text-sm text-gray-500">
+                        <div class="text-sm text-gray-500" id="fileFormatHint">
                             支持格式：MP4, AVI, MOV, MKV | 最大文件：500MB
                         </div>
                     </div>
@@ -276,8 +259,8 @@
                     
                     <!-- 动态配置面板 -->
                     <div id="configPanel">
-                        <!-- 智能擦除配置 -->
-                        <div id="eraserConfig" class="config-section">
+                        <!-- 去除字幕配置 -->
+                        <div id="removeSubtitleConfig" class="config-section">
                             <div class="space-y-6">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-300 mb-3">处理质量</label>
@@ -294,15 +277,15 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-300 mb-3">擦除模式</label>
+                                    <label class="block text-sm font-medium text-gray-300 mb-3">识别模式</label>
                                     <div class="grid grid-cols-1 gap-2">
                                         <button class="bg-green-600 text-white text-sm py-3 px-4 rounded-lg text-left" id="autoMode">
                                             <div class="font-semibold">🤖 AI自动识别</div>
-                                            <div class="text-xs text-green-200">智能检测字幕水印</div>
+                                            <div class="text-xs text-green-200">智能检测各种字幕样式</div>
                                         </button>
-                                        <button class="bg-slate-700 text-gray-300 text-sm py-3 px-4 rounded-lg hover:bg-slate-600 text-left" disabled>
+                                        <button class="bg-slate-700 text-gray-300 text-sm py-3 px-4 rounded-lg hover:bg-slate-600 text-left">
                                             <div class="font-semibold">✋ 手动选择区域</div>
-                                            <div class="text-xs text-gray-400">Pro版本功能</div>
+                                            <div class="text-xs text-gray-400">精确指定字幕区域</div>
                                         </button>
                                     </div>
                                 </div>
@@ -330,7 +313,7 @@
                             <div class="border-t border-blue-500/30 pt-2 mt-2">
                                 <div class="flex justify-between font-semibold text-blue-400">
                                     <span>总计:</span>
-                                    <span id="totalCost">免费试用</span>
+                                    <span id="totalCost">1分钟免费试用</span>
                                 </div>
                             </div>
                         </div>
@@ -445,18 +428,34 @@
 
             // 更新配置面板
             updateConfigPanel(capabilityId);
+            
+            // 更新文件格式提示
+            updateFileFormatHint(capabilityId);
+        }
+
+        function updateFileFormatHint(capabilityId) {
+            const hint = document.getElementById('fileFormatHint');
+            if (!hint) return;
+            
+            if (capabilityId === 'voiceClone') {
+                hint.textContent = '支持格式：wav, mp3, aac, m4a, wma, asf | 最大文件：5MB | 建议：15-20秒音频';
+                hint.className = 'text-sm text-yellow-400';
+            } else {
+                hint.textContent = '支持格式：MP4, AVI, MOV, MKV | 最大文件：500MB';
+                hint.className = 'text-sm text-gray-500';
+            }
         }
 
         function updateConfigPanel(capability) {
             // 隐藏所有配置
-            const eraserConfig = document.getElementById('eraserConfig');
+            const removeSubtitleConfig = document.getElementById('removeSubtitleConfig');
             const otherConfigs = document.getElementById('otherConfigs');
             
-            if (eraserConfig) eraserConfig.style.display = 'none';
+            if (removeSubtitleConfig) removeSubtitleConfig.style.display = 'none';
             if (otherConfigs) otherConfigs.style.display = 'none';
 
-            if (capability === 'eraser') {
-                if (eraserConfig) eraserConfig.style.display = 'block';
+            if (capability === 'removeSubtitle') {
+                if (removeSubtitleConfig) removeSubtitleConfig.style.display = 'block';
             } else {
                 // 为其他功能显示通用配置
                 if (otherConfigs) {
@@ -629,14 +628,22 @@
                 total: document.getElementById('totalCost')
             };
 
-            if (elements.duration) elements.duration.textContent = `约 ${estimation.duration} 分钟`;
-            if (elements.cost) elements.cost.textContent = `¥${estimation.cost.toFixed(1)}`;
-            
-            if (elements.total) {
-                if (estimation.freeTrialCost <= 0) {
-                    elements.total.textContent = '免费试用';
-                } else {
-                    elements.total.textContent = `¥${estimation.freeTrialCost.toFixed(1)}`;
+            if (estimation.isPerUse) {
+                // 声音克隆按次收费
+                if (elements.duration) elements.duration.textContent = '单次处理';
+                if (elements.cost) elements.cost.textContent = `¥${estimation.cost}`;
+                if (elements.total) elements.total.textContent = `¥${estimation.cost}`;
+            } else {
+                // 按分钟收费
+                if (elements.duration) elements.duration.textContent = `约 ${estimation.duration} 分钟`;
+                if (elements.cost) elements.cost.textContent = `¥${estimation.cost.toFixed(1)}`;
+                
+                if (elements.total) {
+                    if (estimation.freeTrialCost <= 0) {
+                        elements.total.textContent = '1分钟免费试用';
+                    } else {
+                        elements.total.textContent = `¥${estimation.freeTrialCost.toFixed(1)}`;
+                    }
                 }
             }
         }
@@ -708,7 +715,7 @@
             
             costElements.forEach(id => {
                 const element = document.getElementById(id);
-                if (element) element.textContent = id === 'totalCost' ? '免费试用' : '--';
+                if (element) element.textContent = id === 'totalCost' ? '1分钟免费试用' : '--';
             });
             
             uploadedFile = null;
@@ -757,8 +764,8 @@
                 });
             }
 
-            // 默认选择智能擦除
-            selectCapability('eraser');
+            // 默认选择去除字幕
+            selectCapability('removeSubtitle');
         }
 
         // 处理来自父页面的导航参数
@@ -771,6 +778,16 @@
                 }
             }
         };
+    </script>
+    
+    <!-- 统一导航栏组件 -->
+    <script src="components/navbar.js"></script>
+    <script>
+        // 初始化导航栏
+        document.addEventListener('DOMContentLoaded', function() {
+            window.unifiedNavbar = new UnifiedNavbar('workspace');
+            window.unifiedNavbar.render();
+        });
     </script>
 </body>
 </html> 
