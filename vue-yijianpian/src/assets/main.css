@@ -1,0 +1,31 @@
+/* 基础样式导入 */
+@import './base.css';
+
+/* 应用容器样式 - 确保全屏布局 */
+#app {
+  width: 100% !important;
+  min-height: 100vh !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-weight: normal;
+}
+
+/* 重置body样式 */
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden;
+}
+
+/* 链接样式 */
+a {
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+@media (hover: hover) {
+  a:hover {
+    opacity: 0.8;
+  }
+}
